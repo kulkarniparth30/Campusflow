@@ -237,7 +237,7 @@ export function LoginScreen() {
           className="w-full max-w-lg rounded-3xl p-6 sm:p-8 relative bg-white shadow-xl border border-[#E2E6ED] space-y-6"
         >
           {/* Header */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-start sm:items-center justify-between gap-3">
             <div>
               <h2 className="text-2xl font-bold tracking-tight text-[#1F1F1F]">
                 Campus Sign In
@@ -246,7 +246,7 @@ export function LoginScreen() {
                 Enter the email & password provided by your administrator.
               </p>
             </div>
-            <Badge tone="blue">Institutional Login</Badge>
+            <Badge tone="blue" className="whitespace-nowrap shrink-0 mt-0.5 sm:mt-0">Institutional Login</Badge>
           </div>
 
           {/* Role Selection Tabs */}
