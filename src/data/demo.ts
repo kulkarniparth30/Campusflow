@@ -20,6 +20,7 @@ import type {
 export const DEMO_PASSWORD = 'CampusFlow!23'
 
 export const DEMO_FACULTIES: Profile[] = [
+  // Computer Science
   {
     id: '22222222-2222-2222-2222-222222222222',
     full_name: 'Dr. Kavya Iyer',
@@ -60,6 +61,112 @@ export const DEMO_FACULTIES: Profile[] = [
     semester: null,
     designation: 'Assistant Professor, Networks',
   },
+  // Information Technology
+  {
+    id: 'fac-it-1',
+    full_name: 'Prof. Sameer Kulkarni',
+    role: 'faculty',
+    email: 'sameer.k@campusflow.edu',
+    roll_no: null,
+    department: 'Information Technology',
+    semester: null,
+    designation: 'Associate Professor, Cloud Lead',
+  },
+  {
+    id: 'fac-it-2',
+    full_name: 'Dr. Neha Deshmukh',
+    role: 'faculty',
+    email: 'neha.d@campusflow.edu',
+    roll_no: null,
+    department: 'Information Technology',
+    semester: null,
+    designation: 'Assistant Professor, Web Tech',
+  },
+  // Electrical & Electronics
+  {
+    id: 'fac-eee-1',
+    full_name: 'Dr. Rakesh Sengupta',
+    role: 'faculty',
+    email: 'rakesh.s@campusflow.edu',
+    roll_no: null,
+    department: 'Electrical Engineering',
+    semester: null,
+    designation: 'Associate Professor, Control Systems',
+  },
+  {
+    id: 'fac-eee-2',
+    full_name: 'Prof. Ananya Roy',
+    role: 'faculty',
+    email: 'ananya.r@campusflow.edu',
+    roll_no: null,
+    department: 'Electrical Engineering',
+    semester: null,
+    designation: 'Assistant Professor, Signals & DSP',
+  },
+  // Mechanical Engineering
+  {
+    id: 'fac-me-1',
+    full_name: 'Dr. Manish Patil',
+    role: 'faculty',
+    email: 'manish.p@campusflow.edu',
+    roll_no: null,
+    department: 'Mechanical Engineering',
+    semester: null,
+    designation: 'Professor, Thermal Systems',
+  },
+  {
+    id: 'fac-me-2',
+    full_name: 'Prof. Suresh Nair',
+    role: 'faculty',
+    email: 'suresh.n@campusflow.edu',
+    roll_no: null,
+    department: 'Mechanical Engineering',
+    semester: null,
+    designation: 'Associate Professor, Fluid Dynamics',
+  },
+]
+
+export const DEMO_HODS: Profile[] = [
+  {
+    id: '77777777-7777-7777-7777-777777777777',
+    full_name: 'Prof. Ramanathan Sharma',
+    role: 'hod',
+    email: 'hod.cs@campusflow.edu',
+    roll_no: 'HOD-CSE-01',
+    department: 'Computer Science',
+    semester: null,
+    designation: 'Head of Department & Academic Chair',
+  },
+  {
+    id: 'hod-it-01',
+    full_name: 'Dr. Sunita Rao',
+    role: 'hod',
+    email: 'hod.it@campusflow.edu',
+    roll_no: 'HOD-IT-02',
+    department: 'Information Technology',
+    semester: null,
+    designation: 'Head of Department, IT',
+  },
+  {
+    id: 'hod-eee-01',
+    full_name: 'Prof. Vikram Malhotra',
+    role: 'hod',
+    email: 'hod.eee@campusflow.edu',
+    roll_no: 'HOD-EEE-03',
+    department: 'Electrical Engineering',
+    semester: null,
+    designation: 'Head of Department, Electrical',
+  },
+  {
+    id: 'hod-me-01',
+    full_name: 'Dr. Arvind Patel',
+    role: 'hod',
+    email: 'hod.me@campusflow.edu',
+    roll_no: 'HOD-ME-04',
+    department: 'Mechanical Engineering',
+    semester: null,
+    designation: 'Head of Department, Mechanical',
+  },
 ]
 
 export const DEMO_PROFILES: Record<string, { password: string; profile: Profile }> = {
@@ -75,6 +182,30 @@ export const DEMO_PROFILES: Record<string, { password: string; profile: Profile 
       semester: 6,
     },
   },
+  'aditya.j@campusflow.edu': {
+    password: DEMO_PASSWORD,
+    profile: {
+      id: 'stud-it-1',
+      full_name: 'Aditya Joshi',
+      role: 'student',
+      email: 'aditya.j@campusflow.edu',
+      roll_no: 'IT21B2011',
+      department: 'Information Technology',
+      semester: 6,
+    },
+  },
+  'student.it@campusflow.edu': {
+    password: DEMO_PASSWORD,
+    profile: {
+      id: 'stud-it-1',
+      full_name: 'Aditya Joshi',
+      role: 'student',
+      email: 'student.it@campusflow.edu',
+      roll_no: 'IT21B2011',
+      department: 'Information Technology',
+      semester: 6,
+    },
+  },
   'faculty@campusflow.edu': {
     password: DEMO_PASSWORD,
     profile: DEMO_FACULTIES[0],
@@ -85,16 +216,19 @@ export const DEMO_PROFILES: Record<string, { password: string; profile: Profile 
   },
   'hod.cs@campusflow.edu': {
     password: DEMO_PASSWORD,
-    profile: {
-      id: '77777777-7777-7777-7777-777777777777',
-      full_name: 'Prof. Ramanathan Sharma',
-      role: 'hod',
-      email: 'hod.cs@campusflow.edu',
-      roll_no: null,
-      department: 'Computer Science',
-      semester: null,
-      designation: 'Head of Department & Academic Chair',
-    },
+    profile: DEMO_HODS[0],
+  },
+  'hod.it@campusflow.edu': {
+    password: DEMO_PASSWORD,
+    profile: DEMO_HODS[1],
+  },
+  'hod.eee@campusflow.edu': {
+    password: DEMO_PASSWORD,
+    profile: DEMO_HODS[2],
+  },
+  'hod.me@campusflow.edu': {
+    password: DEMO_PASSWORD,
+    profile: DEMO_HODS[3],
   },
   'admin@campusflow.edu': {
     password: DEMO_PASSWORD,
@@ -103,7 +237,7 @@ export const DEMO_PROFILES: Record<string, { password: string; profile: Profile 
       full_name: 'Dean Sharma',
       role: 'admin',
       email: 'admin@campusflow.edu',
-      roll_no: null,
+      roll_no: 'ADMIN-001',
       department: 'Administration',
       semester: null,
       designation: 'Dean of Academic Affairs',
@@ -165,6 +299,87 @@ export const DEMO_SUBJECTS: Subject[] = [
     department: 'Computer Science',
     credits: 3,
     contact_hours_per_week: 3,
+    semester: 6,
+    academic_year: '2025-2026',
+  },
+  // Information Technology
+  {
+    id: 'sub-it-cloud',
+    code: 'IT301',
+    name: 'Cloud Computing & DevOps',
+    faculty_id: 'fac-it-1',
+    faculty_name: 'Prof. Sameer Kulkarni',
+    min_attendance_pct: 75,
+    department: 'Information Technology',
+    credits: 4,
+    contact_hours_per_week: 4,
+    semester: 6,
+    academic_year: '2025-2026',
+  },
+  {
+    id: 'sub-it-web',
+    code: 'IT302',
+    name: 'Full Stack Web Architecture',
+    faculty_id: 'fac-it-2',
+    faculty_name: 'Dr. Neha Deshmukh',
+    min_attendance_pct: 75,
+    department: 'Information Technology',
+    credits: 4,
+    contact_hours_per_week: 4,
+    semester: 6,
+    academic_year: '2025-2026',
+  },
+  // Electrical Engineering
+  {
+    id: 'sub-ee-control',
+    code: 'EE301',
+    name: 'Control Systems Engineering',
+    faculty_id: 'fac-eee-1',
+    faculty_name: 'Dr. Rakesh Sengupta',
+    min_attendance_pct: 75,
+    department: 'Electrical Engineering',
+    credits: 4,
+    contact_hours_per_week: 4,
+    semester: 6,
+    academic_year: '2025-2026',
+  },
+  {
+    id: 'sub-ee-dsp',
+    code: 'EE302',
+    name: 'Digital Signal Processing',
+    faculty_id: 'fac-eee-2',
+    faculty_name: 'Prof. Ananya Roy',
+    min_attendance_pct: 75,
+    department: 'Electrical Engineering',
+    credits: 3,
+    contact_hours_per_week: 3,
+    semester: 6,
+    academic_year: '2025-2026',
+  },
+  // Mechanical Engineering
+  {
+    id: 'sub-me-thermo',
+    code: 'ME301',
+    name: 'Applied Thermodynamics',
+    faculty_id: 'fac-me-1',
+    faculty_name: 'Dr. Manish Patil',
+    min_attendance_pct: 75,
+    department: 'Mechanical Engineering',
+    credits: 4,
+    contact_hours_per_week: 4,
+    semester: 6,
+    academic_year: '2025-2026',
+  },
+  {
+    id: 'sub-me-fluid',
+    code: 'ME302',
+    name: 'Fluid Mechanics & Machinery',
+    faculty_id: 'fac-me-2',
+    faculty_name: 'Prof. Suresh Nair',
+    min_attendance_pct: 75,
+    department: 'Mechanical Engineering',
+    credits: 4,
+    contact_hours_per_week: 4,
     semester: 6,
     academic_year: '2025-2026',
   },
@@ -233,12 +448,12 @@ function daysFromNow(n: number, hour = 10) {
 
 export function buildDemoAttendance(): AttendanceRecord[] {
   const rows: AttendanceRecord[] = []
-  const push = (subjectId: string, count: number, absentEvery: number | null) => {
+  const push = (studentId: string, subjectId: string, count: number, absentEvery: number | null) => {
     for (let g = 1; g <= count; g++) {
       const absent = absentEvery !== null && g % absentEvery === 0
       rows.push({
-        id: `att-${subjectId}-${g}`,
-        student_id: student,
+        id: `att-${studentId}-${subjectId}-${g}`,
+        student_id: studentId,
         subject_id: subjectId,
         session_date: daysAgo(g),
         status: absent ? 'absent' : 'present',
@@ -246,10 +461,24 @@ export function buildDemoAttendance(): AttendanceRecord[] {
       })
     }
   }
-  push('sub-dsa', 16, 4)
-  push('sub-dbms', 14, 7)
-  push('sub-os', 12, 9)
-  push('sub-cn', 10, null)
+  // CS Student (Aarav Mehta - CS)
+  push(student, 'sub-dsa', 16, 4)
+  push(student, 'sub-dbms', 14, 7)
+  push(student, 'sub-os', 12, 9)
+  push(student, 'sub-cn', 10, null)
+  
+  // IT Student (Aditya Joshi - IT)
+  const itStudentId = 'stud-it-1'
+  push(itStudentId, 'sub-it-cloud', 16, 4)
+  push(itStudentId, 'sub-it-web', 14, 5)
+
+  // Other demo subject baselines
+  push(student, 'sub-it-cloud', 14, 5)
+  push(student, 'sub-it-web', 12, null)
+  push(student, 'sub-ee-control', 15, 3)
+  push(student, 'sub-ee-dsp', 12, 6)
+  push(student, 'sub-me-thermo', 14, null)
+  push(student, 'sub-me-fluid', 13, 4)
   return rows
 }
 
@@ -367,6 +596,103 @@ export const DEMO_ASSIGNMENTS: Assignment[] = [
     urgency: 4,
     created_by: faculty,
   },
+  // Information Technology Assignments
+  {
+    id: 'as-it-1',
+    subject_id: 'sub-it-cloud',
+    title: 'Kubernetes Cluster Architecture & Helm Deployments',
+    description: 'Deploy a multi-tier microservices application on a local Minikube cluster using Helm charts and ingress controllers.',
+    questions: [
+      '1. Configure a 3-node cluster topology with persistent volume claims (PVC) backed by hostpath provisioner.',
+      '2. Write Helm templates with values.yaml parameterization for production and staging environments.',
+      '3. Implement horizontal pod autoscaling (HPA) targeting CPU utilization > 70% with stress testing verification.',
+      '4. Submit repository URL with CI/CD GitHub Actions pipeline yaml and terminal screenshots.'
+    ],
+    question_pdf_url: 'https://campusflow.edu/materials/it301_kubernetes_helm_lab.pdf',
+    kind: 'assignment',
+    due_at: daysFromNow(4, 23),
+    urgency: 4,
+    created_by: 'fac-it-1',
+  },
+  {
+    id: 'as-it-2',
+    subject_id: 'sub-it-web',
+    title: 'Full Stack Microservices with JWT & Redis Cache',
+    description: 'Build an event-driven RESTful API gateway with token-based authentication and Redis distributed caching.',
+    questions: [
+      '1. Implement access token and refresh token rotation with HTTP-only secure cookie storage.',
+      '2. Cache expensive database queries in Redis with a 300s TTL and cache-invalidation hooks on write operations.',
+      '3. Benchmark endpoint response latency with Apache Bench (1000 requests, concurrency 50).'
+    ],
+    question_pdf_url: 'https://campusflow.edu/materials/it302_microservices_project.pdf',
+    kind: 'assignment',
+    due_at: daysFromNow(7, 18),
+    urgency: 3,
+    created_by: 'fac-it-2',
+  },
+  // Electrical Engineering Assignments
+  {
+    id: 'as-ee-1',
+    subject_id: 'sub-ee-control',
+    title: 'Bode Plot & State-Space Stability Analysis',
+    description: 'Perform frequency response modeling and root-locus stability design for a fourth-order feedback system.',
+    questions: [
+      '1. Derive the open-loop and closed-loop transfer functions for the inverted pendulum system.',
+      '2. Plot Bode gain and phase margins; determine gain crossover frequency and phase crossover frequency.',
+      '3. Design a lead-lag compensator in MATLAB/Simulink to achieve a 45-degree phase margin.'
+    ],
+    question_pdf_url: 'https://campusflow.edu/materials/ee301_control_stability_lab.pdf',
+    kind: 'assignment',
+    due_at: daysFromNow(5, 17),
+    urgency: 4,
+    created_by: 'fac-eee-1',
+  },
+  {
+    id: 'as-ee-2',
+    subject_id: 'sub-ee-dsp',
+    title: 'FIR/IIR Filter Design & FFT Spectral Analysis',
+    description: 'Design digital Butterworth and Chebyshev low-pass filters with bilinear transformation.',
+    questions: [
+      '1. Implement a 64-point Radix-2 Decimation-in-Time FFT algorithm from mathematical definition.',
+      '2. Filter high-frequency noise from a synthetic audio signal with an 8th-order IIR Butterworth filter.'
+    ],
+    question_pdf_url: 'https://campusflow.edu/materials/ee302_dsp_filter_design.pdf',
+    kind: 'assignment',
+    due_at: daysFromNow(10, 20),
+    urgency: 2,
+    created_by: 'fac-eee-2',
+  },
+  // Mechanical Engineering Assignments
+  {
+    id: 'as-me-1',
+    subject_id: 'sub-me-thermo',
+    title: 'Rankine Cycle Reheat & Regeneration Thermal Analysis',
+    description: 'Compute thermal efficiency and specific steam consumption across varying reheat pressures.',
+    questions: [
+      '1. Draw the T-s and h-s state diagrams for an ideal reheat Rankine cycle operating between 150 bar and 0.05 bar.',
+      '2. Calculate boiler heat input, turbine work output, and thermodynamic first-law efficiency.'
+    ],
+    question_pdf_url: 'https://campusflow.edu/materials/me301_rankine_thermal_analysis.pdf',
+    kind: 'assignment',
+    due_at: daysFromNow(6, 15),
+    urgency: 3,
+    created_by: 'fac-me-1',
+  },
+  {
+    id: 'as-me-2',
+    subject_id: 'sub-me-fluid',
+    title: 'Navier-Stokes Boundary Layer Simulation',
+    description: 'Analyze laminar to turbulent boundary layer transitions over flat surfaces using computational fluid dynamics.',
+    questions: [
+      '1. Solve the Blasius equation using Runge-Kutta 4th-order numerical method for boundary layer thickness.',
+      '2. Plot velocity profile u/U versus dimensionless distance eta and calculate wall shear stress.'
+    ],
+    question_pdf_url: 'https://campusflow.edu/materials/me302_fluid_boundary_layer.pdf',
+    kind: 'assignment',
+    due_at: daysFromNow(9, 18),
+    urgency: 3,
+    created_by: 'fac-me-2',
+  },
 ]
 
 export const DEMO_NOTICES: Notice[] = [
@@ -465,6 +791,7 @@ export const DEMO_CORRECTIONS: CorrectionRequest[] = [
 ]
 
 export const BATCH_STUDENTS: Profile[] = [
+  // Computer Science & Engineering
   DEMO_PROFILES['student@campusflow.edu'].profile,
   {
     id: '44444444-4444-4444-4444-444444444444',
@@ -492,6 +819,144 @@ export const BATCH_STUDENTS: Profile[] = [
     roll_no: 'CS21B1084',
     department: 'Computer Science',
     semester: 6,
+  },
+  {
+    id: 'stud-cs-4',
+    full_name: 'Vikram Sethi',
+    role: 'student',
+    email: 'vikram.s@campusflow.edu',
+    roll_no: 'CS21B1092',
+    department: 'Computer Science',
+    semester: 6,
+  },
+  {
+    id: 'stud-cs-5',
+    full_name: 'Divya Nambiar',
+    role: 'student',
+    email: 'divya.n@campusflow.edu',
+    roll_no: 'CS22B1015',
+    department: 'Computer Science',
+    semester: 4,
+  },
+  // Information Technology
+  {
+    id: 'stud-it-1',
+    full_name: 'Aditya Joshi',
+    role: 'student',
+    email: 'aditya.j@campusflow.edu',
+    roll_no: 'IT21B2011',
+    department: 'Information Technology',
+    semester: 6,
+  },
+  {
+    id: 'stud-it-2',
+    full_name: 'Pooja Hegde',
+    role: 'student',
+    email: 'pooja.h@campusflow.edu',
+    roll_no: 'IT21B2024',
+    department: 'Information Technology',
+    semester: 6,
+  },
+  {
+    id: 'stud-it-3',
+    full_name: 'Nikhil Saxena',
+    role: 'student',
+    email: 'nikhil.s@campusflow.edu',
+    roll_no: 'IT21B2035',
+    department: 'Information Technology',
+    semester: 6,
+  },
+  {
+    id: 'stud-it-4',
+    full_name: 'Sneha Reddy',
+    role: 'student',
+    email: 'sneha.r@campusflow.edu',
+    roll_no: 'IT22B2008',
+    department: 'Information Technology',
+    semester: 4,
+  },
+  {
+    id: 'stud-it-5',
+    full_name: 'Kunal Deshmukh',
+    role: 'student',
+    email: 'kunal.d@campusflow.edu',
+    roll_no: 'IT20B2042',
+    department: 'Information Technology',
+    semester: 8,
+  },
+  // Electrical & Electronics Engineering
+  {
+    id: 'stud-ee-1',
+    full_name: 'Karthik Raman',
+    role: 'student',
+    email: 'karthik.r@campusflow.edu',
+    roll_no: 'EE21B3005',
+    department: 'Electrical Engineering',
+    semester: 6,
+  },
+  {
+    id: 'stud-ee-2',
+    full_name: 'Ananya Bharadwaj',
+    role: 'student',
+    email: 'ananya.b@campusflow.edu',
+    roll_no: 'EE21B3018',
+    department: 'Electrical Engineering',
+    semester: 6,
+  },
+  {
+    id: 'stud-ee-3',
+    full_name: 'Siddharth Menon',
+    role: 'student',
+    email: 'siddharth.m@campusflow.edu',
+    roll_no: 'EE21B3029',
+    department: 'Electrical Engineering',
+    semester: 6,
+  },
+  {
+    id: 'stud-ee-4',
+    full_name: 'Deepika Iyer',
+    role: 'student',
+    email: 'deepika.i@campusflow.edu',
+    roll_no: 'EE22B3012',
+    department: 'Electrical Engineering',
+    semester: 4,
+  },
+  // Mechanical Engineering
+  {
+    id: 'stud-me-1',
+    full_name: 'Tanvi Kulkarni',
+    role: 'student',
+    email: 'tanvi.k@campusflow.edu',
+    roll_no: 'ME21B4019',
+    department: 'Mechanical Engineering',
+    semester: 6,
+  },
+  {
+    id: 'stud-me-2',
+    full_name: 'Harsh Vardhan',
+    role: 'student',
+    email: 'harsh.v@campusflow.edu',
+    roll_no: 'ME21B4031',
+    department: 'Mechanical Engineering',
+    semester: 6,
+  },
+  {
+    id: 'stud-me-3',
+    full_name: 'Gaurav Shinde',
+    role: 'student',
+    email: 'gaurav.s@campusflow.edu',
+    roll_no: 'ME21B4044',
+    department: 'Mechanical Engineering',
+    semester: 6,
+  },
+  {
+    id: 'stud-me-4',
+    full_name: 'Pallavi Chawla',
+    role: 'student',
+    email: 'pallavi.c@campusflow.edu',
+    roll_no: 'ME22B4009',
+    department: 'Mechanical Engineering',
+    semester: 4,
   },
 ]
 
@@ -530,6 +995,24 @@ export const DEMO_TIMETABLE: TimetableSlot[] = [
   // Saturday
   { id: 'tt-21', subject_id: 'sub-dsa', day: 'sat', start_time: '09:30', end_time: '11:30', room: 'Seminar-A', type: 'tutorial' },
   { id: 'tt-22', subject_id: 'sub-os', day: 'sat', start_time: '11:45', end_time: '13:00', room: 'CS-Lab 1', type: 'lab' },
+
+  // Information Technology Slots
+  { id: 'tt-it-1', subject_id: 'sub-it-cloud', day: 'mon', start_time: '09:00', end_time: '10:00', room: 'IT-101', type: 'lecture' },
+  { id: 'tt-it-2', subject_id: 'sub-it-web', day: 'mon', start_time: '10:15', end_time: '11:15', room: 'IT-Lab 1', type: 'lab' },
+  { id: 'tt-it-3', subject_id: 'sub-it-cloud', day: 'wed', start_time: '11:30', end_time: '12:30', room: 'IT-101', type: 'lecture' },
+  { id: 'tt-it-4', subject_id: 'sub-it-web', day: 'thu', start_time: '14:00', end_time: '15:00', room: 'IT-102', type: 'lecture' },
+
+  // Electrical Engineering Slots
+  { id: 'tt-ee-1', subject_id: 'sub-ee-control', day: 'mon', start_time: '10:15', end_time: '11:15', room: 'EE-201', type: 'lecture' },
+  { id: 'tt-ee-2', subject_id: 'sub-ee-dsp', day: 'tue', start_time: '09:00', end_time: '10:00', room: 'EE-DSP Lab', type: 'lab' },
+  { id: 'tt-ee-3', subject_id: 'sub-ee-control', day: 'thu', start_time: '11:30', end_time: '12:30', room: 'EE-201', type: 'lecture' },
+  { id: 'tt-ee-4', subject_id: 'sub-ee-dsp', day: 'fri', start_time: '14:00', end_time: '15:00', room: 'EE-202', type: 'tutorial' },
+
+  // Mechanical Engineering Slots
+  { id: 'tt-me-1', subject_id: 'sub-me-thermo', day: 'tue', start_time: '10:15', end_time: '11:15', room: 'ME-301', type: 'lecture' },
+  { id: 'tt-me-2', subject_id: 'sub-me-fluid', day: 'wed', start_time: '09:00', end_time: '10:00', room: 'ME-Fluid Lab', type: 'lab' },
+  { id: 'tt-me-3', subject_id: 'sub-me-thermo', day: 'fri', start_time: '11:30', end_time: '12:30', room: 'ME-301', type: 'lecture' },
+  { id: 'tt-me-4', subject_id: 'sub-me-fluid', day: 'sat', start_time: '09:00', end_time: '10:00', room: 'ME-302', type: 'tutorial' },
 ]
 
 /* ---- Phase 3: OD / Medical Requests ---- */

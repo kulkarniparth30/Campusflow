@@ -12,6 +12,7 @@ import { AppShell } from './components/layout/AppShell'
 import { LoginScreen } from './components/LoginScreen'
 import { StudentCommandCenter } from './components/views/StudentCommandCenter'
 import { Timetable } from './components/dashboard/Timetable'
+import { TimetableManagement } from './components/admin/TimetableManagement'
 import { ODRequestPanel } from './components/attendance/ODRequestPanel'
 import { SubmissionPortal } from './components/faculty/SubmissionPortal'
 import { AIHub } from './components/views/AIHub'
@@ -48,6 +49,7 @@ function AuthenticatedApp({
   const submissions = useCampusStore((s) => s.submissions)
   const auditLogs = useCampusStore((s) => s.auditLogs)
   const facultyList = useCampusStore((s) => s.facultyList)
+  const hodList = useCampusStore((s) => s.hodList)
 
   const markAttendance = useCampusStore((s) => s.markAttendance)
   const submitCorrection = useCampusStore((s) => s.submitCorrection)
@@ -59,6 +61,38 @@ function AuthenticatedApp({
   const submitAssignment = useCampusStore((s) => s.submitAssignment)
   const gradeSubmission = useCampusStore((s) => s.gradeSubmission)
   const allocateCourse = useCampusStore((s) => s.allocateCourse)
+  const onboardFaculty = useCampusStore((s) => s.onboardFaculty)
+  const onboardHOD = useCampusStore((s) => s.onboardHOD)
+  const enrollStudent = useCampusStore((s) => s.enrollStudent)
+  const addTimetableSlot = useCampusStore((s) => s.addTimetableSlot)
+  const updateTimetableSlot = useCampusStore((s) => s.updateTimetableSlot)
+  const removeTimetableSlot = useCampusStore((s) => s.removeTimetableSlot)
+
+  // Strict Department Isolation Guard: If user is a student, ensure subjects, assignments, and timetable are strictly scoped to their department
+  const effectiveSubjects = useMemo(() => {
+    if (role === 'student' && profile?.department) {
+      const studentDept = profile.department.toLowerCase()
+      const deptSubs = subjects.filter((s) => s.department && (s.department.toLowerCase().includes(studentDept) || studentDept.includes(s.department.toLowerCase())))
+      return deptSubs.length > 0 ? deptSubs : subjects
+    }
+    return subjects
+  }, [subjects, role, profile?.department])
+
+  const effectiveSubjectIds = useMemo(() => new Set(effectiveSubjects.map(s => s.id)), [effectiveSubjects])
+
+  const effectiveAssignments = useMemo(() => {
+    if (role === 'student') {
+      return assignments.filter(a => a.subject_id && effectiveSubjectIds.has(a.subject_id))
+    }
+    return assignments
+  }, [assignments, role, effectiveSubjectIds])
+
+  const effectiveTimetable = useMemo(() => {
+    if (role === 'student') {
+      return timetable.filter(slot => effectiveSubjectIds.has(slot.subject_id))
+    }
+    return timetable
+  }, [timetable, role, effectiveSubjectIds])
 
   const studentRecords = attendance.filter((r) => r.student_id === profile!.id)
   const studentCorrections =
@@ -68,25 +102,27 @@ function AuthenticatedApp({
 
   const priorityItems = useMemo(() => {
     return buildPriorityFeed({
-      assignments,
+      assignments: effectiveAssignments,
       notices,
-      subjects,
+      subjects: effectiveSubjects,
       attendance,
       studentId: profile!.id,
     })
-  }, [assignments, notices, subjects, attendance, profile])
+  }, [effectiveAssignments, notices, effectiveSubjects, attendance, profile])
 
   // Senior Architect RBAC Guard: Protect role-specific views
   const isStudentOnlyRoute = ['attendance', 'priority', 'portfolio', 'ai-hub'].includes(view)
   const isFacultyOnlyRoute = view === 'faculty'
   const isHODOnlyRoute = view === 'hod'
+  const isAdminOnlyRoute = view === 'timetable-mgmt'
 
-  const isDeniedStudent = role === 'student' && (isFacultyOnlyRoute || isHODOnlyRoute)
-  const isDeniedStaff = (role === 'faculty' || role === 'hod') && isStudentOnlyRoute
+  const isDeniedStudent = role === 'student' && (isFacultyOnlyRoute || isHODOnlyRoute || isAdminOnlyRoute)
+  const isDeniedStaff = (role === 'faculty' || role === 'hod' || role === 'admin') && isStudentOnlyRoute
   const isDeniedFacultyOnHOD = role === 'faculty' && isHODOnlyRoute
-  const isDenied = isDeniedStudent || isDeniedStaff || isDeniedFacultyOnHOD
+  const isDeniedNonAdmin = role !== 'admin' && isAdminOnlyRoute
+  const isDenied = isDeniedStudent || isDeniedStaff || isDeniedFacultyOnHOD || isDeniedNonAdmin
 
-  const backDeck = role === 'hod' ? 'hod' : role === 'faculty' ? 'faculty' : 'command'
+  const backDeck = role === 'hod' || role === 'admin' ? 'hod' : role === 'faculty' ? 'faculty' : 'command'
 
   return (
     <>
@@ -96,8 +132,8 @@ function AuthenticatedApp({
             <div className="w-12 h-12 rounded-2xl bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(244,63,94,0.3)]">
               <ShieldAlert size={24} />
             </div>
-            <h2 className="text-xl font-bold text-stone-100">Access Restricted</h2>
-            <p className="text-sm text-zinc-400 leading-relaxed">
+            <h2 className="text-xl font-bold text-[#1F1F1F]">Access Restricted</h2>
+            <p className="text-sm text-[#666666] leading-relaxed">
               {isDeniedStudent ? (
                 <>
                   You are signed in as a <span className="text-amber-400 font-semibold font-mono">Student</span>. The Academic Governance & Faculty Workspaces are reserved for institutional educators and department heads.
@@ -119,16 +155,7 @@ function AuthenticatedApp({
         ) : (
           <>
             {view === 'command' && (
-              role === 'admin' ? (
-                <HODDashboard
-                  subjects={subjects}
-                  students={batch}
-                  attendance={attendance}
-                  faculties={facultyList}
-                  auditLogs={auditLogs}
-                  onAllocateCourse={allocateCourse}
-                />
-              ) : role === 'faculty' ? (
+              role === 'faculty' ? (
                 <FacultyWorkspace
                   subjects={subjects}
                   students={batch}
@@ -151,14 +178,14 @@ function AuthenticatedApp({
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-2xl font-bold text-stone-100">Attendance Monitor & Trajectory Simulator</h1>
-                    <p className="text-xs text-zinc-400">Dedicated interactive simulator with guardian safety forecasts.</p>
+                    <h1 className="text-2xl font-bold text-[#1F1F1F]">Attendance Monitor & Trajectory Simulator</h1>
+                    <p className="text-xs text-[#666666]">Dedicated interactive simulator with guardian safety forecasts.</p>
                   </div>
                   <Button variant="outline" size="sm" onClick={() => setView(backDeck)}>
                     <ArrowLeft size={14} /> Back to Deck
                   </Button>
                 </div>
-                <AttendanceMonitor subjects={subjects} records={attendance} studentId={profile!.id} />
+                <AttendanceMonitor subjects={effectiveSubjects} records={attendance} studentId={profile!.id} />
               </div>
             )}
 
@@ -166,8 +193,8 @@ function AuthenticatedApp({
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-2xl font-bold text-stone-100">Dynamic Priority Intelligence Feed</h1>
-                    <p className="text-xs text-zinc-400">Ranked by proximity algorithm, urgency ratings, and risk trajectories.</p>
+                    <h1 className="text-2xl font-bold text-[#1F1F1F]">Dynamic Priority Intelligence Feed</h1>
+                    <p className="text-xs text-[#666666]">Ranked by proximity algorithm, urgency ratings, and risk trajectories.</p>
                   </div>
                   <Button variant="outline" size="sm" onClick={() => setView(backDeck)}>
                     <ArrowLeft size={14} /> Back to Deck
@@ -181,14 +208,14 @@ function AuthenticatedApp({
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-2xl font-bold text-stone-100">Academic & Examination Timeline</h1>
-                    <p className="text-xs text-zinc-400">Live countdown tags, chronological milestones, and exam alerts.</p>
+                    <h1 className="text-2xl font-bold text-[#1F1F1F]">Academic & Examination Timeline</h1>
+                    <p className="text-xs text-[#666666]">Live countdown tags, chronological milestones, and exam alerts.</p>
                   </div>
                   <Button variant="outline" size="sm" onClick={() => setView(backDeck)}>
                     <ArrowLeft size={14} /> Back to Deck
                   </Button>
                 </div>
-                <AcademicTimeline assignments={assignments} notices={notices} subjects={subjects} />
+                <AcademicTimeline assignments={effectiveAssignments} notices={notices} subjects={effectiveSubjects} />
               </div>
             )}
             
@@ -196,14 +223,14 @@ function AuthenticatedApp({
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-2xl font-bold text-stone-100">Weekly Lecture Timetable</h1>
-                    <p className="text-xs text-zinc-400">Classroom allocations and active period indicators.</p>
+                    <h1 className="text-2xl font-bold text-[#1F1F1F]">Weekly Lecture Timetable</h1>
+                    <p className="text-xs text-[#666666]">Classroom allocations and active period indicators.</p>
                   </div>
                   <Button variant="outline" size="sm" onClick={() => setView(backDeck)}>
                     <ArrowLeft size={14} /> Back to Deck
                   </Button>
                 </div>
-                <Timetable slots={timetable} subjects={subjects} />
+                <Timetable slots={effectiveTimetable} subjects={effectiveSubjects} />
               </div>
             )}
 
@@ -211,8 +238,8 @@ function AuthenticatedApp({
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-2xl font-bold text-stone-100">Leave & On-Duty (OD) Pipeline</h1>
-                    <p className="text-xs text-zinc-400">Multi-tier verified approval workflow with real-time tracking.</p>
+                    <h1 className="text-2xl font-bold text-[#1F1F1F]">Leave & On-Duty (OD) Pipeline</h1>
+                    <p className="text-xs text-[#666666]">Multi-tier verified approval workflow with real-time tracking.</p>
                   </div>
                   <Button variant="outline" size="sm" onClick={() => setView(backDeck)}>
                     <ArrowLeft size={14} /> Back to Deck
@@ -231,32 +258,32 @@ function AuthenticatedApp({
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-2xl font-bold text-stone-100">Student Coursework & Submissions</h1>
-                    <p className="text-xs text-zinc-400">Course-first assignment browser, problem statements, PDF rubrics, and coursework uploads.</p>
+                    <h1 className="text-2xl font-bold text-[#1F1F1F]">Student Coursework & Submissions</h1>
+                    <p className="text-xs text-[#666666]">Course-first assignment browser, problem statements, PDF rubrics, and coursework uploads.</p>
                   </div>
                   <Button variant="outline" size="sm" onClick={() => setView(backDeck)}>
                     <ArrowLeft size={14} /> Back to Deck
                   </Button>
                 </div>
                 <SubmissionPortal 
-                  assignments={assignments} 
+                  assignments={effectiveAssignments} 
                   submissions={submissions} 
                   role={role!} 
                   onSubmit={submitAssignment} 
                   onGrade={gradeSubmission} 
-                  subjects={subjects}
+                  subjects={effectiveSubjects}
                 />
               </div>
             )}
 
-            {view === 'ai-hub' && <AIHub />}
+            {view === 'ai-hub' && <AIHub subjects={effectiveSubjects} assignments={effectiveAssignments} timetable={effectiveTimetable} />}
 
             {view === 'corrections' && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-2xl font-bold text-stone-100">Attendance Correction System</h1>
-                    <p className="text-xs text-zinc-400">Formal grievance disputes, faculty reviews, and attendance register rectification.</p>
+                    <h1 className="text-2xl font-bold text-[#1F1F1F]">Attendance Correction System</h1>
+                    <p className="text-xs text-[#666666]">Formal grievance disputes, faculty reviews, and attendance register rectification.</p>
                   </div>
                   <Button variant="outline" size="sm" onClick={() => setView(backDeck)}>
                     <ArrowLeft size={14} /> Back to Deck
@@ -278,8 +305,8 @@ function AuthenticatedApp({
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-2xl font-bold text-stone-100">Digital Achievement Portfolio</h1>
-                    <p className="text-xs text-zinc-400">Verifiable credentials, event photo proof evidence, and official certificates.</p>
+                    <h1 className="text-2xl font-bold text-[#1F1F1F]">Digital Achievement Portfolio</h1>
+                    <p className="text-xs text-[#666666]">Verifiable credentials, event photo proof evidence, and official certificates.</p>
                   </div>
                   <Button variant="outline" size="sm" onClick={() => setView(backDeck)}>
                     <ArrowLeft size={14} /> Back to Deck
@@ -298,8 +325,14 @@ function AuthenticatedApp({
                 students={batch}
                 attendance={attendance}
                 faculties={facultyList}
+                hodList={hodList}
                 auditLogs={auditLogs}
+                role={role!}
+                currentProfile={profile!}
                 onAllocateCourse={allocateCourse}
+                onOnboardFaculty={onboardFaculty}
+                onOnboardHOD={onboardHOD}
+                onEnrollStudent={enrollStudent}
               />
             )}
 
@@ -323,8 +356,8 @@ function AuthenticatedApp({
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h1 className="text-2xl font-bold text-stone-100">Institutional Broadcast & Circulars</h1>
-                    <p className="text-xs text-zinc-400">Official campus announcements, subject briefs, and exam notifications.</p>
+                    <h1 className="text-2xl font-bold text-[#1F1F1F]">Institutional Broadcast & Circulars</h1>
+                    <p className="text-xs text-[#666666]">Official campus announcements, subject briefs, and exam notifications.</p>
                   </div>
                   <Button variant="outline" size="sm" onClick={() => setView(backDeck)}>
                     <ArrowLeft size={14} /> Back to Deck
@@ -332,6 +365,17 @@ function AuthenticatedApp({
                 </div>
                 <NoticePublisher notices={notices} onPublish={publishNotice} subjects={subjects} />
               </div>
+            )}
+
+            {view === 'timetable-mgmt' && (
+              <TimetableManagement
+                subjects={subjects}
+                faculties={facultyList}
+                timetable={timetable}
+                onAddSlot={addTimetableSlot}
+                onUpdateSlot={updateTimetableSlot}
+                onRemoveSlot={removeTimetableSlot}
+              />
             )}
           </>
         )}

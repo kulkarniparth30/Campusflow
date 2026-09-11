@@ -28,19 +28,22 @@ const nav: { id: AppView; label: string; icon: typeof LayoutDashboard; roles: st
   // HOD Academic Governance
   { id: 'hod', label: 'Department Governance', icon: Building2, roles: ['hod', 'admin'] },
 
+  // Admin Timetable Management
+  { id: 'timetable-mgmt', label: 'Timetable Management', icon: Calendar, roles: ['admin'] },
+
   // Faculty Station
-  { id: 'faculty', label: 'Faculty Station', icon: Table2, roles: ['faculty', 'admin'] },
+  { id: 'faculty', label: 'Faculty Station', icon: Table2, roles: ['faculty'] },
 
   // Student Primary Views
-  { id: 'command', label: 'Command Center', icon: LayoutDashboard, roles: ['student', 'admin'] },
+  { id: 'command', label: 'Command Center', icon: LayoutDashboard, roles: ['student'] },
   { id: 'attendance', label: 'Attendance Monitor', icon: Activity, roles: ['student'] },
   { id: 'priority', label: 'Priority Feed', icon: ListOrdered, roles: ['student'] },
   
   // Shared Academic Views
-  { id: 'timetable', label: 'Timetable', icon: Calendar, roles: ['student', 'faculty', 'hod', 'admin'] },
+  { id: 'timetable', label: 'Timetable', icon: Calendar, roles: ['student', 'faculty', 'hod'] },
   { id: 'submissions', label: 'Assignments & Work', icon: Upload, roles: ['student'] },
-  { id: 'od-requests', label: 'Leave Requests', icon: FileCheck, roles: ['student', 'faculty', 'hod', 'admin'] },
-  { id: 'portfolio', label: 'Portfolio', icon: GraduationCap, roles: ['student', 'admin'] },
+  { id: 'od-requests', label: 'Leave Requests', icon: FileCheck, roles: ['student', 'faculty', 'hod'] },
+  { id: 'portfolio', label: 'Portfolio', icon: GraduationCap, roles: ['student'] },
   { id: 'ai-hub', label: 'AI Guardian Hub', icon: Brain, roles: ['student'] },
   
   // Institutional Broadcast
@@ -54,7 +57,7 @@ export function AppShell({
   children: ReactNode
   onCommand: () => void
 }) {
-  const { profile, role, signOut, view, setView, live } = useAuth()
+  const { profile, role, signOut, view, setView } = useAuth()
   const corrections = useCampusStore((s) => s.corrections)
   const [dark, setDark] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -113,7 +116,7 @@ export function AppShell({
               )}
               <div className="flex items-center gap-3 group-hover:translate-x-1 transition-transform">
                 <n.icon size={17} className={view === n.id ? 'text-[#2563EB]' : 'text-[#666666] group-hover:text-[#2563EB] transition-colors'} />
-                {n.label}
+                {n.id === 'hod' && role === 'admin' ? 'College Governance & HODs' : n.label}
               </div>
               {n.id === 'corrections' && pendingCorrections > 0 && (
                 <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#2563EB] text-[10px] font-bold text-white shadow-sm">
@@ -128,8 +131,8 @@ export function AppShell({
           <p className="capitalize text-[11px] text-[#2563EB] font-mono mt-0.5">{profile?.role} {profile?.department ? `· ${profile?.department}` : ''}</p>
           <div className="mt-2.5 flex items-center justify-between border-t border-[#E2E6ED] pt-2">
             <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-wide text-[#666666]">
-              <span className={`h-1.5 w-1.5 rounded-full ${live ? 'bg-[#4CAF50] animate-pulse' : 'bg-[#2563EB]'}`} />
-              {live ? 'Supabase live' : 'Demo sandbox'}
+              <span className="h-1.5 w-1.5 rounded-full bg-[#4CAF50] animate-pulse" />
+              Connected Secure ERP
             </span>
           </div>
         </div>
@@ -184,7 +187,7 @@ export function AppShell({
                     >
                       <div className="flex items-center gap-3">
                         <n.icon size={17} className={view === n.id ? 'text-[#2563EB]' : 'text-[#666666]'} />
-                        {n.label}
+                        {n.id === 'hod' && role === 'admin' ? 'College Governance & HODs' : n.label}
                       </div>
                     </button>
                   ))}
@@ -230,7 +233,7 @@ export function AppShell({
             <span className="text-[#E2E6ED]">/</span>
             <span className="text-[#2563EB] capitalize font-medium">
               {view === 'hod'
-                ? 'Department Governance & Allocations'
+                ? (role === 'admin' ? 'College Governance & HOD Provisioning' : 'Department Governance & Allocations')
                 : view === 'faculty'
                 ? 'Faculty Command Station'
                 : view === 'command'

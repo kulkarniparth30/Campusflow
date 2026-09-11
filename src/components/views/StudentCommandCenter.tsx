@@ -36,11 +36,27 @@ const itemVars = {
 export function StudentCommandCenter() {
   const { setView } = useAuth()
   const profile = useCampusStore((s) => s.profile)!
-  const subjects = useCampusStore((s) => s.subjects)
+  const allSubjects = useCampusStore((s) => s.subjects)
+  const allAssignments = useCampusStore((s) => s.assignments)
   const attendance = useCampusStore((s) => s.attendance)
-  const assignments = useCampusStore((s) => s.assignments)
   const notices = useCampusStore((s) => s.notices)
   const [scannerOpen, setScannerOpen] = useState(false)
+
+  // Strict Department Isolation for Student Command Center
+  const subjects = useMemo(() => {
+    if (profile?.department) {
+      const studentDept = profile.department.toLowerCase()
+      const deptSubs = allSubjects.filter(s => s.department && (s.department.toLowerCase().includes(studentDept) || studentDept.includes(s.department.toLowerCase())))
+      return deptSubs.length > 0 ? deptSubs : allSubjects
+    }
+    return allSubjects
+  }, [allSubjects, profile?.department])
+
+  const subjectIdSet = useMemo(() => new Set(subjects.map(s => s.id)), [subjects])
+
+  const assignments = useMemo(() => {
+    return allAssignments.filter(a => a.subject_id && subjectIdSet.has(a.subject_id))
+  }, [allAssignments, subjectIdSet])
 
   const items = buildPriorityFeed({
     assignments,

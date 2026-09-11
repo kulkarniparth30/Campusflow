@@ -9,6 +9,7 @@ import {
   DEMO_AUDIT_LOGS,
   DEMO_CORRECTIONS,
   DEMO_FACULTIES,
+  DEMO_HODS,
   DEMO_NOTICES,
   DEMO_OD_REQUESTS,
   DEMO_PROFILES,
@@ -59,6 +60,7 @@ interface CampusState {
   submissions: Submission[]
   auditLogs: AuditLog[]
   facultyList: Profile[]
+  hodList: Profile[]
   attendanceLoans: AttendanceLoan[]
   substitutions: FacultySubstitution[]
   activeFlashRoll: FlashRollSession | null
@@ -82,8 +84,38 @@ interface CampusState {
   requestSubstitution: (subjectId: string, substituteFacultyId: string, date: string, slotTime: string, reason: string) => void
   reviewSubstitution: (substitutionId: string, status: 'accepted' | 'rejected' | 'completed') => void
 
-  // HOD Course-Faculty Allocation Matrix
+  // HOD Course-Faculty Allocation Matrix & Credential Provisioning
   allocateCourse: (subjectId: string, facultyId: string, notes?: string) => string | null
+  onboardFaculty: (data: {
+    full_name: string
+    email: string
+    department: string
+    designation: string
+    employee_id?: string
+    assigned_course_id?: string
+    password?: string
+  }) => { profile: Profile; tempPassword: string; assignedCourseName?: string }
+  onboardHOD: (data: {
+    full_name: string
+    email: string
+    department: string
+    designation: string
+    employee_id?: string
+    password?: string
+  }) => { profile: Profile; tempPassword: string }
+  enrollStudent: (data: {
+    full_name: string
+    email: string
+    department: string
+    semester: number
+    roll_no?: string
+    password?: string
+  }) => { profile: Profile; tempPassword: string }
+
+  // Admin Timetable Management
+  addTimetableSlot: (slot: Omit<TimetableSlot, 'id'>) => TimetableSlot
+  updateTimetableSlot: (slotId: string, updates: Partial<Omit<TimetableSlot, 'id'>>) => void
+  removeTimetableSlot: (slotId: string) => void
 
   // ERP Audit Logging
   logAudit: (action: AuditLog['action'], target: string, details: string) => void
@@ -128,23 +160,6 @@ interface CampusState {
 
 const persisted = typeof localStorage !== 'undefined' ? localStorage.getItem('cf-session') : null
 
-// Security fix: validate persisted session against known demo profiles
-function validatePersistedProfile(): Profile | null {
-  if (!persisted) return null
-  try {
-    const parsed = JSON.parse(persisted) as Profile
-    // Verify the profile exists in demo data (prevents localStorage injection)
-    const knownEmails = Object.keys(DEMO_PROFILES)
-    const matchEntry = knownEmails.find((email) => DEMO_PROFILES[email].profile.id === parsed.id)
-    if (!matchEntry) return null
-    // Always return the server-side profile (not the client-provided one)
-    return DEMO_PROFILES[matchEntry].profile
-  } catch {
-    return null
-  }
-}
-
-
 function getDynamicUser(email: string) {
   try {
     const raw = localStorage.getItem(`cf-user-${email.toLowerCase()}`)
@@ -162,6 +177,53 @@ function saveDynamicUser(email: string, password: string, profile: Profile) {
   return record
 }
 
+function getStoredDynamicFaculties(): Profile[] {
+  try {
+    const raw = localStorage.getItem('cf-dynamic-faculties')
+    return raw ? JSON.parse(raw) : []
+  } catch {
+    return []
+  }
+}
+
+function getStoredDynamicHODs(): Profile[] {
+  try {
+    const raw = localStorage.getItem('cf-dynamic-hods')
+    return raw ? JSON.parse(raw) : []
+  } catch {
+    return []
+  }
+}
+
+function getStoredDynamicStudents(): Profile[] {
+  try {
+    const raw = localStorage.getItem('cf-dynamic-students')
+    return raw ? JSON.parse(raw) : []
+  } catch {
+    return []
+  }
+}
+
+// Security fix: validate persisted session against known demo profiles or validated dynamic credentials
+function validatePersistedProfile(): Profile | null {
+  if (!persisted) return null
+  try {
+    const parsed = JSON.parse(persisted) as Profile
+    const knownEmails = Object.keys(DEMO_PROFILES)
+    const matchEntry = knownEmails.find((email) => DEMO_PROFILES[email].profile.id === parsed.id)
+    if (matchEntry) {
+      return DEMO_PROFILES[matchEntry].profile
+    }
+    const dyn = getDynamicUser(parsed.email)
+    if (dyn && dyn.profile && dyn.profile.id === parsed.id) {
+      return dyn.profile
+    }
+    return null
+  } catch {
+    return null
+  }
+}
+
 export const useCampusStore = create<CampusState>((set, get) => ({
   profile: validatePersistedProfile(),
   subjects: DEMO_SUBJECTS,
@@ -170,12 +232,13 @@ export const useCampusStore = create<CampusState>((set, get) => ({
   notices: DEMO_NOTICES,
   corrections: DEMO_CORRECTIONS,
   achievements: DEMO_ACHIEVEMENTS,
-  batch: BATCH_STUDENTS,
+  batch: [...BATCH_STUDENTS, ...getStoredDynamicStudents()],
   timetable: DEMO_TIMETABLE,
   odRequests: DEMO_OD_REQUESTS,
   submissions: DEMO_SUBMISSIONS,
   auditLogs: DEMO_AUDIT_LOGS,
-  facultyList: DEMO_FACULTIES,
+  facultyList: [...DEMO_FACULTIES, ...getStoredDynamicFaculties()],
+  hodList: [...DEMO_HODS, ...getStoredDynamicHODs()],
   attendanceLoans: DEMO_ATTENDANCE_LOANS,
   substitutions: DEMO_SUBSTITUTIONS,
   activeFlashRoll: null,
@@ -395,17 +458,37 @@ export const useCampusStore = create<CampusState>((set, get) => ({
       const nameParts = emailKey.split('@')[0].split(/[._]/)
       const formattedName = nameParts.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ') || 'Campus Member'
 
+      // Intelligently infer department from email domain/handle prefix
+      let inferredDept = 'Computer Science'
+      let deptCode = 'CS'
+      if (emailKey.includes('.it') || emailKey.includes('it.') || emailKey.includes('it2')) {
+        inferredDept = 'Information Technology'
+        deptCode = 'IT'
+      } else if (emailKey.includes('.ee') || emailKey.includes('ee.') || emailKey.includes('ee2') || emailKey.includes('eee')) {
+        inferredDept = 'Electrical Engineering'
+        deptCode = 'EE'
+      } else if (emailKey.includes('.me') || emailKey.includes('me.') || emailKey.includes('me2') || emailKey.includes('mech')) {
+        inferredDept = 'Mechanical Engineering'
+        deptCode = 'ME'
+      }
+
       const newProfile: Profile = {
         id: `user-${Date.now()}`,
         full_name: formattedName,
         role: inferredRole,
         email: emailKey,
-        roll_no: inferredRole === 'student' ? `CS24B${Math.floor(1000 + Math.random() * 9000)}` : null,
-        department: 'Computer Science',
-        semester: inferredRole === 'student' ? 1 : null,
+        roll_no: inferredRole === 'student' ? `${deptCode}24B${Math.floor(1000 + Math.random() * 9000)}` : null,
+        department: inferredDept,
+        semester: inferredRole === 'student' ? 6 : null,
         designation: inferredRole === 'faculty' ? 'Faculty Member' : inferredRole === 'admin' ? 'Academic Administrator' : undefined,
       }
       row = saveDynamicUser(emailKey, password, newProfile)
+      if (inferredRole === 'student') {
+        const currentBatch = get().batch
+        if (!currentBatch.some((s) => s.email.toLowerCase() === emailKey)) {
+          set({ batch: [...currentBatch, newProfile] })
+        }
+      }
     }
 
     if (row.password && password && row.password !== password) {
@@ -475,6 +558,223 @@ export const useCampusStore = create<CampusState>((set, get) => ({
     )
 
     return null
+  },
+
+  onboardFaculty: (data) => {
+    const currentProfile = get().profile
+    const emailKey = data.email.trim().toLowerCase()
+    
+    // Check if faculty with this email already exists
+    const existingFaculty = get().facultyList.find((f) => f.email.toLowerCase() === emailKey)
+    if (existingFaculty) {
+      throw new Error(`Faculty member with email ${data.email} is already registered.`)
+    }
+
+    const tempPassword = data.password?.trim() || `Faculty@${Math.floor(1000 + Math.random() * 9000)}`
+    const facultyId = `faculty-${Date.now()}`
+    const empId = data.employee_id?.trim() || `EMP-CSE-${Math.floor(100 + Math.random() * 900)}`
+
+    const newFacultyProfile: Profile = {
+      id: facultyId,
+      full_name: data.full_name.trim(),
+      role: 'faculty',
+      email: emailKey,
+      roll_no: empId,
+      department: data.department || 'Computer Science',
+      designation: data.designation || 'Assistant Professor',
+      semester: null,
+    }
+
+    // Save in dynamic credentials store so they can log in directly
+    saveDynamicUser(emailKey, tempPassword, newFacultyProfile)
+
+    // Persist dynamic faculties list
+    try {
+      const stored = getStoredDynamicFaculties()
+      localStorage.setItem('cf-dynamic-faculties', JSON.stringify([...stored, newFacultyProfile]))
+    } catch {}
+
+    let assignedCourseName: string | undefined
+
+    // Update store state with new faculty and optionally allocated course
+    set((state) => {
+      let updatedSubjects = state.subjects
+      if (data.assigned_course_id) {
+        const targetSub = state.subjects.find((s) => s.id === data.assigned_course_id)
+        if (targetSub) {
+          assignedCourseName = `${targetSub.code} · ${targetSub.name}`
+          updatedSubjects = state.subjects.map((s) =>
+            s.id === data.assigned_course_id
+              ? { ...s, faculty_id: newFacultyProfile.id, faculty_name: newFacultyProfile.full_name }
+              : s
+          )
+        }
+      }
+
+      return {
+        facultyList: [...state.facultyList, newFacultyProfile],
+        subjects: updatedSubjects,
+      }
+    })
+
+    // Log ERP Audit Trail entry
+    get().logAudit(
+      'FACULTY_ONBOARDING',
+      `${newFacultyProfile.full_name} (${empId})`,
+      `Admin/HOD (${currentProfile?.full_name || 'Academic Administrator'}) generated official credentials for ${newFacultyProfile.email} (${data.department} · ${data.designation}). ${assignedCourseName ? `Initial allocated course: [${assignedCourseName}].` : 'No initial course allocated.'}`
+    )
+
+    return {
+      profile: newFacultyProfile,
+      tempPassword,
+      assignedCourseName,
+    }
+  },
+
+  onboardHOD: (data) => {
+    const currentProfile = get().profile
+    const emailKey = data.email.trim().toLowerCase()
+
+    const existingUser = get().hodList.find((h) => h.email.toLowerCase() === emailKey)
+    if (existingUser) {
+      throw new Error(`An HOD with email ${data.email} is already provisioned.`)
+    }
+
+    const tempPassword = data.password?.trim() || `HOD@${Math.floor(1000 + Math.random() * 9000)}`
+    const hodId = `hod-${Date.now()}`
+    const empId = data.employee_id?.trim() || `HOD-${data.department.substring(0, 3).toUpperCase()}-${Math.floor(10 + Math.random() * 90)}`
+
+    const newHODProfile: Profile = {
+      id: hodId,
+      full_name: data.full_name.trim(),
+      role: 'hod',
+      email: emailKey,
+      roll_no: empId,
+      department: data.department,
+      designation: data.designation || `Head of Department, ${data.department}`,
+      semester: null,
+    }
+
+    // Save in dynamic credentials store so the HOD can log in directly
+    saveDynamicUser(emailKey, tempPassword, newHODProfile)
+
+    // Persist dynamic HOD list
+    try {
+      const stored = getStoredDynamicHODs()
+      localStorage.setItem('cf-dynamic-hods', JSON.stringify([...stored, newHODProfile]))
+    } catch {}
+
+    set((state) => ({
+      hodList: [...state.hodList, newHODProfile],
+    }))
+
+    // Log ERP Audit Trail entry
+    get().logAudit(
+      'HOD_ONBOARDING',
+      `${newHODProfile.full_name} (${empId})`,
+      `College Administrator (${currentProfile?.full_name || 'Dean Sharma'}) provisioned new Department Chair for ${data.department}. Credentials issued for ${emailKey}.`
+    )
+
+    return {
+      profile: newHODProfile,
+      tempPassword,
+    }
+  },
+
+  enrollStudent: (data) => {
+    const currentProfile = get().profile
+    const emailKey = data.email.trim().toLowerCase()
+
+    const existingUser = get().batch.find((s) => s.email.toLowerCase() === emailKey)
+    if (existingUser) {
+      throw new Error(`A student with email ${data.email} is already enrolled.`)
+    }
+
+    const tempPassword = data.password?.trim() || `Student@${Math.floor(1000 + Math.random() * 9000)}`
+    const studentId = `stud-${Date.now()}`
+    const deptPrefix = data.department.substring(0, 2).toUpperCase()
+    const rollNo = data.roll_no?.trim() || `${deptPrefix}23B${Math.floor(1000 + Math.random() * 9000)}`
+
+    const newStudentProfile: Profile = {
+      id: studentId,
+      full_name: data.full_name.trim(),
+      role: 'student',
+      email: emailKey,
+      roll_no: rollNo,
+      department: data.department,
+      semester: data.semester || 6,
+    }
+
+    // Save in dynamic credentials store so the student can log in directly
+    saveDynamicUser(emailKey, tempPassword, newStudentProfile)
+
+    // Persist dynamic students list
+    try {
+      const stored = getStoredDynamicStudents()
+      localStorage.setItem('cf-dynamic-students', JSON.stringify([...stored, newStudentProfile]))
+    } catch {}
+
+    set((state) => ({
+      batch: [...state.batch, newStudentProfile],
+    }))
+
+    // Log ERP Audit Trail entry
+    get().logAudit(
+      'STUDENT_ENROLLMENT',
+      `${newStudentProfile.full_name} (${rollNo})`,
+      `${currentProfile?.role === 'admin' ? 'College Admin' : 'Department HOD'} (${currentProfile?.full_name || 'Academic Authority'}) enrolled student into ${data.department} (Semester ${data.semester}). Login credentials issued for ${emailKey}.`
+    )
+
+    return {
+      profile: newStudentProfile,
+      tempPassword,
+    }
+  },
+
+  // ── Admin Timetable Management ──
+  addTimetableSlot: (slotData) => {
+    const newSlot: TimetableSlot = {
+      ...slotData,
+      id: `tt-${uid()}`,
+    }
+    set((state) => ({
+      timetable: [...state.timetable, newSlot],
+    }))
+    const subject = get().subjects.find((s) => s.id === slotData.subject_id)
+    get().logAudit(
+      'TIMETABLE_UPDATED',
+      `${subject?.code || slotData.subject_id} — ${slotData.day} ${slotData.start_time}`,
+      `Added timetable slot: ${subject?.name || 'Unknown'} on ${slotData.day} ${slotData.start_time}–${slotData.end_time} in ${slotData.room} (${slotData.type || 'lecture'}).`
+    )
+    return newSlot
+  },
+
+  updateTimetableSlot: (slotId, updates) => {
+    set((state) => ({
+      timetable: state.timetable.map((slot) =>
+        slot.id === slotId ? { ...slot, ...updates } : slot
+      ),
+    }))
+    const updatedSlot = get().timetable.find((s) => s.id === slotId)
+    const subject = updatedSlot ? get().subjects.find((s) => s.id === updatedSlot.subject_id) : null
+    get().logAudit(
+      'TIMETABLE_UPDATED',
+      `${subject?.code || slotId} — ${updatedSlot?.day} ${updatedSlot?.start_time}`,
+      `Updated timetable slot ${slotId}: ${Object.keys(updates).join(', ')} modified.`
+    )
+  },
+
+  removeTimetableSlot: (slotId) => {
+    const slot = get().timetable.find((s) => s.id === slotId)
+    const subject = slot ? get().subjects.find((s) => s.id === slot.subject_id) : null
+    set((state) => ({
+      timetable: state.timetable.filter((s) => s.id !== slotId),
+    }))
+    get().logAudit(
+      'TIMETABLE_UPDATED',
+      `${subject?.code || slotId} — ${slot?.day} ${slot?.start_time}`,
+      `Removed timetable slot: ${subject?.name || 'Unknown'} on ${slot?.day} ${slot?.start_time}–${slot?.end_time} from ${slot?.room}.`
+    )
   },
 
   logAudit: (action, target, details) => {

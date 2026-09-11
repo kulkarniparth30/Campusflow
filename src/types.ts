@@ -17,6 +17,7 @@ export type AppView =
   | 'od-requests'
   | 'submissions'
   | 'ai-hub'
+  | 'timetable-mgmt'
 
 export interface Profile {
   id: string
@@ -65,6 +66,10 @@ export interface AuditLog {
     | 'SUBSTITUTION_UPDATED'
     | 'OD_FILED'
     | 'OD_CREDITED'
+    | 'FACULTY_ONBOARDING'
+    | 'HOD_ONBOARDING'
+    | 'STUDENT_ENROLLMENT'
+    | 'TIMETABLE_UPDATED'
   target: string
   details: string
 }

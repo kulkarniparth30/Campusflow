@@ -9,6 +9,7 @@ import { Badge } from './ui/badge'
 import {
   GraduationCap,
   Table2,
+  Building2,
   ShieldCheck,
   ArrowRight,
   Sparkles,
@@ -79,12 +80,32 @@ export const ROLE_CATEGORIES: RoleCategory[] = [
     ],
   },
   {
+    role: 'hod',
+    label: 'HOD',
+    title: 'Department Head Console',
+    desc: 'Department-specific academic governance: faculty curriculum allocation, student attendance oversight & OBE attainment radar.',
+    icon: Building2,
+    badge: 'HOD Station',
+    tone: 'cyan',
+    accentBorder: 'border-[#B8CCF0] shadow-[0_4px_16px_rgba(184,204,240,0.4)]',
+    accentBg: 'bg-[#DCE7F8]',
+    accentText: 'text-[#2563EB]',
+    emailPlaceholder: 'hod.cs@campusflow.edu',
+    demoEmail: 'hod.cs@campusflow.edu',
+    features: [
+      'Department Course Allocation & Faculty Workload',
+      'Student Attendance Oversight & Risk Warnings',
+      'Accreditation OBE & Blooms Attainment Telemetry',
+      'Department Faculty Provisioning & Substitutions',
+    ],
+  },
+  {
     role: 'admin',
     label: 'Admin',
-    title: 'Admin Console',
-    desc: 'Oversee department governance, course allocation matrix, faculty workload balancing, audits & campus circulars.',
+    title: 'College Admin Console',
+    desc: 'College-wide governance: provision department HOD credentials, cross-department analytics, institutional audit & master timetable.',
     icon: ShieldCheck,
-    badge: 'Admin Console',
+    badge: 'College Admin',
     tone: 'purple',
     accentBorder: 'border-[#B8CCF0] shadow-[0_4px_16px_rgba(184,204,240,0.4)]',
     accentBg: 'bg-[#DCE7F8]',
@@ -92,10 +113,10 @@ export const ROLE_CATEGORIES: RoleCategory[] = [
     emailPlaceholder: 'admin@campusflow.edu',
     demoEmail: 'admin@campusflow.edu',
     features: [
-      'Department Course Allocation & Faculty Workload',
-      'Academic Recovery Contracts (Attendance Loans)',
-      'Accreditation OBE & Blooms Attainment Telemetry',
-      'Campus-Wide Circulars & Institutional Audit Logs',
+      'Multi-Department Switcher & Institutional Oversight',
+      'Onboard Department HODs & Generate Credentials',
+      'Master Timetable Management Across Departments',
+      'Campus-Wide Circulars & Official ERP Audit Trail',
     ],
   },
 ]
@@ -203,7 +224,7 @@ export function LoginScreen() {
         </div>
 
         <div className="relative z-10 flex items-center justify-between border-t border-[#E2E6ED] pt-6 text-xs text-[#666666] font-mono">
-          <span>React 19 · Vite · Tailwind · Supabase Auth</span>
+          <span>Enterprise Campus Management & ERP System</span>
           <span className="text-[#2563EB]">v2.2 Academic ERP</span>
         </div>
       </div>
@@ -233,7 +254,7 @@ export function LoginScreen() {
             <label className="text-[11px] font-bold uppercase tracking-widest text-[#666666] block mb-2">
               Select Your Role
             </label>
-            <div className="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-[#F5F6F8] border border-[#E2E6ED]">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1.5 rounded-2xl bg-[#F5F6F8] border border-[#E2E6ED]">
               {ROLE_CATEGORIES.map((r) => {
                 const Icon = r.icon
                 const isSelected = selectedRole === r.role
@@ -338,7 +359,7 @@ export function LoginScreen() {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="grid grid-cols-3 gap-2 pt-1 overflow-hidden"
+                  className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 overflow-hidden"
                 >
                   {ROLE_CATEGORIES.map((r) => {
                     const Icon = r.icon

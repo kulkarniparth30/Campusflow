@@ -26,7 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null)
   const [view, setView] = useState<AppView>(() => {
     const r = demoProfile?.role
-    return r === 'admin' ? 'hod' : r === 'faculty' ? 'faculty' : 'command'
+    return r === 'admin' || r === 'hod' ? 'hod' : r === 'faculty' ? 'faculty' : 'command'
   })
 
   const value = useMemo<AuthContextValue>(
@@ -57,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           throw new Error(fail)
         }
         const role = useCampusStore.getState().profile?.role
-        setView(role === 'admin' ? 'hod' : role === 'faculty' ? 'faculty' : 'command')
+        setView(role === 'admin' || role === 'hod' ? 'hod' : role === 'faculty' ? 'faculty' : 'command')
       },
       signUp: async ({ email, password, full_name, role, department, roll_no }) => {
         setError(null)
@@ -82,7 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           throw new Error(fail)
         }
         const assignedRole = useCampusStore.getState().profile?.role
-        setView(assignedRole === 'admin' ? 'hod' : assignedRole === 'faculty' ? 'faculty' : 'command')
+        setView(assignedRole === 'admin' || assignedRole === 'hod' ? 'hod' : assignedRole === 'faculty' ? 'faculty' : 'command')
       },
       signOut: async () => {
         if (supabase) await supabase.auth.signOut()
