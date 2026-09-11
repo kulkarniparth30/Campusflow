@@ -131,18 +131,18 @@ export function FacultyWorkspace({
   return (
     <div className="space-y-6">
       {/* Workspace Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 glass rounded-3xl p-6 border border-cyan-500/20">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white/90 backdrop-blur-md rounded-3xl p-6 border border-[#E2E6ED] shadow-sm">
         <div>
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.9)] animate-pulse" />
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-400">
+            <span className="h-2 w-2 rounded-full bg-[#2563EB] shadow-[0_0_8px_rgba(37,99,235,0.4)] animate-pulse" />
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#2563EB]">
               Faculty Command Station
             </p>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white mt-1">
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#1F1F1F] mt-1">
             {profile?.full_name || 'Dr. Kavya Iyer'}’s Academic Workspace
           </h1>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-[#666666] mt-1">
             Department of {profile?.department || 'Computer Science & Engineering'} · Assigned Courses Scoped Control Deck
           </p>
         </div>
@@ -155,7 +155,7 @@ export function FacultyWorkspace({
           <Button
             size="sm"
             onClick={() => setFlashRollModalOpen(true)}
-            className="bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/30 font-bold"
+            className="bg-[#DCE7F8] text-[#2563EB] border border-[#B8CCF0] hover:bg-[#cbe0fb] font-bold"
           >
             <QrCode size={14} className="mr-1.5" /> Start Flash-Roll QR
           </Button>
@@ -163,7 +163,7 @@ export function FacultyWorkspace({
           <Button
             size="sm"
             onClick={() => setCreateModalOpen(true)}
-            className="bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 hover:from-cyan-400 hover:to-blue-500 font-bold shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+            className="bg-[#2563EB] text-white hover:bg-[#1D4ED8] font-bold shadow-md shadow-[#2563EB]/20"
           >
             <Plus size={14} className="mr-1.5" /> Assign New Coursework
           </Button>
@@ -173,10 +173,10 @@ export function FacultyWorkspace({
       {/* Assigned Subjects Overview Bar */}
       <div className="space-y-2">
         <div className="flex items-center justify-between px-1">
-          <span className="text-xs font-bold uppercase tracking-wider text-cyan-300 flex items-center gap-1.5">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#2563EB] flex items-center gap-1.5">
             <BookOpen size={13} /> Your Assigned Teaching Portfolio ({assignedSubjects.length})
           </span>
-          <span className="text-[11px] text-zinc-400 font-mono">
+          <span className="text-[11px] text-[#666666] font-mono">
             {students.length} Enrolled Students per Course
           </span>
         </div>
@@ -192,29 +192,29 @@ export function FacultyWorkspace({
             return (
               <div
                 key={sub.id}
-                className="p-4 rounded-2xl border border-cyan-500/20 bg-slate-900/40 hover:border-cyan-500/40 transition-all flex flex-col justify-between space-y-3"
+                className="p-4 rounded-2xl border border-[#E2E6ED] bg-white hover:border-[#2563EB]/40 transition-all flex flex-col justify-between space-y-3 shadow-sm"
               >
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs font-mono font-bold text-cyan-400 px-2 py-0.5 rounded-md bg-cyan-500/10 border border-cyan-500/20">
+                    <span className="text-xs font-mono font-bold text-[#2563EB] px-2 py-0.5 rounded-md bg-[#DCE7F8] border border-[#B8CCF0]">
                       {sub.code}
                     </span>
-                    <span className="text-[11px] font-mono text-zinc-400">
+                    <span className="text-[11px] font-mono text-[#666666]">
                       {sub.min_attendance_pct}% Min Target
                     </span>
                   </div>
-                  <h4 className="text-sm font-bold text-white">{sub.name}</h4>
+                  <h4 className="text-sm font-bold text-[#1F1F1F]">{sub.name}</h4>
                 </div>
 
-                <div className="pt-2 border-t border-white/5 flex items-center justify-between text-xs text-zinc-400">
+                <div className="pt-2 border-t border-[#E2E6ED] flex items-center justify-between text-xs text-[#666666]">
                   <span className="flex items-center gap-1">
-                    <GraduationCap size={12} className="text-cyan-400" /> {students.length} Students
+                    <GraduationCap size={12} className="text-[#2563EB]" /> {students.length} Students
                   </span>
                   <span className="flex items-center gap-1">
-                    <Clock size={12} className="text-blue-400" /> {subAssignments.length} Coursework
+                    <Clock size={12} className="text-[#2563EB]" /> {subAssignments.length} Coursework
                   </span>
                   {subPendingGrading > 0 && (
-                    <span className="text-amber-400 font-bold">
+                    <span className="text-amber-600 font-bold">
                       {subPendingGrading} Pending
                     </span>
                   )}
@@ -237,14 +237,14 @@ export function FacultyWorkspace({
               className={cn(
                 'group p-4 rounded-2xl border text-left transition-all relative overflow-hidden cursor-pointer',
                 isActive
-                  ? 'bg-cyan-500/10 border-cyan-500/50 shadow-[0_0_25px_rgba(6,182,212,0.15)]'
-                  : 'bg-white/3 border-white/6 hover:bg-white/6 hover:border-white/12'
+                  ? 'bg-[#DCE7F8]/80 border-[#2563EB]/40 shadow-sm'
+                  : 'bg-white/80 border-[#E2E6ED] hover:bg-white hover:border-[#B8CCF0]'
               )}
             >
               {isActive && (
                 <motion.div
                   layoutId="activeFacultyTabIndicator"
-                  className="absolute inset-0 border-b-2 border-cyan-400 pointer-events-none"
+                  className="absolute inset-0 border-b-2 border-[#2563EB] pointer-events-none"
                   transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 />
               )}
@@ -253,8 +253,8 @@ export function FacultyWorkspace({
                   className={cn(
                     'p-2 rounded-xl transition-colors',
                     isActive
-                      ? 'bg-cyan-500 text-slate-950 font-bold shadow-[0_0_12px_rgba(6,182,212,0.8)]'
-                      : 'bg-white/6 text-zinc-400 group-hover:text-zinc-200'
+                      ? 'bg-[#2563EB] text-white font-bold shadow-md shadow-[#2563EB]/20'
+                      : 'bg-[#F5F6F8] text-[#666666] group-hover:text-[#1F1F1F]'
                   )}
                 >
                   <Icon size={18} />
@@ -268,12 +268,12 @@ export function FacultyWorkspace({
               <p
                 className={cn(
                   'text-sm font-bold tracking-tight transition-colors',
-                  isActive ? 'text-cyan-200' : 'text-zinc-200 group-hover:text-white'
+                  isActive ? 'text-[#2563EB]' : 'text-[#1F1F1F] group-hover:text-[#2563EB]'
                 )}
               >
                 {tab.label}
               </p>
-              <p className="text-[11px] text-zinc-400 line-clamp-1 mt-0.5">{tab.desc}</p>
+              <p className="text-[11px] text-[#666666] line-clamp-1 mt-0.5">{tab.desc}</p>
             </button>
           )
         })}

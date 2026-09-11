@@ -93,34 +93,34 @@ export function CorrectionPanel({
   return (
     <div className="grid gap-6 lg:grid-cols-2 items-start">
       {role === 'student' && (
-        <Card className="glass sticky top-4">
+        <Card className="bg-white/90 backdrop-blur-md border-[#E2E6ED] shadow-sm sticky top-4">
           <CardHeader>
             <div>
               <div className="flex items-center gap-2">
-                <CardTitle>Request Attendance Correction</CardTitle>
-                <FileQuestion size={18} className="text-indigo-400" />
+                <CardTitle className="text-[#1F1F1F]">Request Attendance Correction</CardTitle>
+                <FileQuestion size={18} className="text-[#2563EB]" />
               </div>
-              <CardHint>Submit medical proof or official reason to your course faculty.</CardHint>
+              <CardHint className="text-[#666666]">Submit medical proof or official reason to your course faculty.</CardHint>
             </div>
           </CardHeader>
 
           {absences.length === 0 ? (
-            <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-6 text-center">
-              <CheckCircle2 size={32} className="mx-auto mb-3 text-emerald-400 opacity-50" />
-              <p className="text-sm text-emerald-400 font-medium">No pending corrections — all clear!</p>
-              <p className="text-xs text-emerald-500/70 mt-1">Your attendance records are looking great.</p>
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-6 text-center">
+              <CheckCircle2 size={32} className="mx-auto mb-3 text-emerald-600 opacity-50" />
+              <p className="text-sm text-emerald-700 font-medium">No pending corrections — all clear!</p>
+              <p className="text-xs text-emerald-600 mt-1">Your attendance records are looking great.</p>
             </div>
           ) : (
             <form className="space-y-4" onSubmit={handleStudentSubmit}>
               <div>
-                <label className="block text-xs font-medium text-zinc-400 mb-2">Select Absent Session</label>
+                <label className="block text-xs font-medium text-[#666666] mb-2">Select Absent Session</label>
                 <select
-                  className="h-10 w-full rounded-xl border border-white/10 bg-black/40 px-3 text-sm text-zinc-200 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                  className="h-10 w-full rounded-xl border border-[#E2E6ED] bg-[#F5F6F8] px-3 text-sm text-[#1F1F1F] outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] transition-all"
                   value={activeRecordId}
                   onChange={(e) => setSelectedRecordId(e.target.value)}
                 >
                   {absences.map((r) => (
-                    <option key={r.id} value={r.id} className="bg-zinc-900">
+                    <option key={r.id} value={r.id} className="bg-white text-[#1F1F1F]">
                       {subjectOf(r.id)?.code} ({subjectOf(r.id)?.name}) · {r.session_date}
                     </option>
                   ))}
@@ -128,50 +128,50 @@ export function CorrectionPanel({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-zinc-400 mb-2">Reason / Explanation</label>
+                <label className="block text-xs font-medium text-[#666666] mb-2">Reason / Explanation</label>
                 <Textarea
                   placeholder="e.g. Attended Hackathon Finals with Dean permission / Medical leave slip submitted to HOD."
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
                   rows={4}
-                  className="bg-black/40 border-white/10 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                  className="bg-[#F5F6F8] border-[#E2E6ED] text-[#1F1F1F] focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] transition-all"
                 />
               </div>
 
               <div className="flex items-center justify-between pt-2">
-                <span className="text-[11px] text-zinc-500">Updates attendance upon faculty approval</span>
-                <Button type="submit">Submit Request</Button>
+                <span className="text-[11px] text-[#666666]">Updates attendance upon faculty approval</span>
+                <Button type="submit" className="bg-[#2563EB] text-white hover:bg-[#1D4ED8] font-bold shadow-md shadow-[#2563EB]/20">Submit Request</Button>
               </div>
             </form>
           )}
         </Card>
       )}
 
-      <Card className={cn("glass", role === 'student' ? '' : 'lg:col-span-2')}>
+      <Card className={cn("bg-white/90 backdrop-blur-md border-[#E2E6ED] shadow-sm", role === 'student' ? '' : 'lg:col-span-2')}>
         <CardHeader className="pb-2">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full">
             <div>
               <div className="flex items-center gap-2">
-                <CardTitle>{role === 'student' ? 'Your Correction Requests' : 'Faculty Verification Queue'}</CardTitle>
-                <MessageSquareCheck size={18} className="text-indigo-400" />
+                <CardTitle className="text-[#1F1F1F]">{role === 'student' ? 'Your Correction Requests' : 'Faculty Verification Queue'}</CardTitle>
+                <MessageSquareCheck size={18} className="text-[#2563EB]" />
               </div>
-              <CardHint>
+              <CardHint className="text-[#666666]">
                 {role === 'student'
                   ? 'Track status of your submitted review requests.'
                   : 'Review, comment on, and approve or reject student correction requests.'}
               </CardHint>
             </div>
             
-            <div className="flex bg-black/30 rounded-lg p-1 shrink-0 self-start">
+            <div className="flex bg-[#F5F6F8] border border-[#E2E6ED] rounded-lg p-1 shrink-0 self-start">
               {(['all', 'pending', 'approved', 'rejected'] as const).map(tab => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={cn(
-                    "px-3 py-1.5 text-xs font-medium rounded-md capitalize transition-colors",
+                    "px-3 py-1.5 text-xs font-medium rounded-md capitalize transition-colors cursor-pointer",
                     activeTab === tab 
-                      ? "bg-white/10 text-white shadow-sm" 
-                      : "text-zinc-400 hover:text-zinc-200 hover:bg-white/5"
+                      ? "bg-[#2563EB] text-white shadow-sm" 
+                      : "text-[#666666] hover:text-[#1F1F1F] hover:bg-white"
                   )}
                 >
                   {tab}
@@ -183,9 +183,9 @@ export function CorrectionPanel({
 
         {filteredRequests.length === 0 ? (
           <div className="p-10 text-center flex flex-col items-center justify-center">
-             <CheckCircle2 size={32} className="mb-3 text-zinc-500 opacity-50" />
-            <p className="text-sm font-medium text-zinc-400">No {activeTab !== 'all' ? activeTab : ''} requests found.</p>
-            <p className="text-xs text-zinc-500 mt-1">The queue is currently empty.</p>
+             <CheckCircle2 size={32} className="mb-3 text-[#666666] opacity-50" />
+            <p className="text-sm font-medium text-[#666666]">No {activeTab !== 'all' ? activeTab : ''} requests found.</p>
+            <p className="text-xs text-[#666666] mt-1">The queue is currently empty.</p>
           </div>
         ) : (
           <motion.div 
@@ -208,9 +208,9 @@ export function CorrectionPanel({
                     key={c.id}
                     className={cn(
                       "rounded-xl border p-4 transition-all overflow-hidden",
-                      c.status === 'pending' ? 'bg-white/5 border-white/10 hover:border-indigo-500/50 glow-border' :
-                      c.status === 'approved' ? 'bg-emerald-500/5 border-emerald-500/20' :
-                      'bg-red-500/5 border-red-500/20'
+                      c.status === 'pending' ? 'bg-[#F5F6F8] border-[#E2E6ED] hover:border-[#B8CCF0]' :
+                      c.status === 'approved' ? 'bg-emerald-50 border-emerald-200' :
+                      'bg-red-50 border-red-200'
                     )}
                   >
                     <div 
@@ -219,19 +219,19 @@ export function CorrectionPanel({
                     >
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <p className="text-sm font-semibold text-zinc-100">
+                          <p className="text-sm font-semibold text-[#1F1F1F]">
                             {subjectOf(c.attendance_record_id)?.code}
                           </p>
-                          <span className="text-zinc-500 text-xs px-1.5 py-0.5 rounded bg-black/30">
+                          <span className="text-[#666666] text-xs px-1.5 py-0.5 rounded bg-white border border-[#E2E6ED]">
                             {rec?.session_date}
                           </span>
                           {student && (
-                            <span className="flex items-center gap-1 rounded bg-indigo-500/10 px-2 py-0.5 text-[11px] text-indigo-300 font-mono">
+                            <span className="flex items-center gap-1 rounded bg-[#DCE7F8] px-2 py-0.5 text-[11px] text-[#2563EB] font-mono">
                               <User size={11} /> {student.full_name} ({student.roll_no})
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-zinc-400">
+                        <p className="text-xs text-[#666666]">
                           {subjectOf(c.attendance_record_id)?.name}
                         </p>
                       </div>
@@ -248,7 +248,7 @@ export function CorrectionPanel({
                         >
                           {c.status}
                         </Badge>
-                        <button className="text-zinc-500 hover:text-zinc-300 p-1 rounded-md hover:bg-white/10 transition-colors">
+                        <button className="text-[#666666] hover:text-[#1F1F1F] p-1 rounded-md hover:bg-white transition-colors">
                           {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                         </button>
                       </div>
@@ -260,23 +260,23 @@ export function CorrectionPanel({
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
-                          className="pt-4 mt-4 border-t border-white/5 space-y-4"
+                          className="pt-4 mt-4 border-t border-[#E2E6ED] space-y-4"
                         >
-                          <div className="rounded-lg bg-black/40 p-3 text-sm text-zinc-300 border border-white/5">
-                            <span className="text-zinc-500 font-semibold block mb-1.5 text-[10px] uppercase tracking-wider">
+                          <div className="rounded-lg bg-white p-3 text-sm text-[#1F1F1F] border border-[#E2E6ED]">
+                            <span className="text-[#666666] font-semibold block mb-1.5 text-[10px] uppercase tracking-wider">
                               Student Reason
                             </span>
                             <p className="leading-relaxed">{c.reason}</p>
                           </div>
 
-                          <div className="flex items-center justify-between text-[11px] text-zinc-500">
+                          <div className="flex items-center justify-between text-[11px] text-[#666666]">
                             <span>Requested: {format(parseISO(c.created_at), 'd MMM yyyy, h:mm a')}</span>
                           </div>
 
                           {role !== 'student' && c.status === 'pending' && (
                             <div className="flex flex-col gap-3 pt-2">
                               <Textarea
-                                className="h-20 w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2 text-sm text-zinc-200 outline-none focus:border-indigo-500 transition-all"
+                                className="h-20 w-full rounded-xl border border-[#E2E6ED] bg-white px-3 py-2 text-sm text-[#1F1F1F] outline-none focus:border-[#2563EB] transition-all"
                                 placeholder="Add faculty verification remark (e.g. Verified with medical center)..."
                                 value={currentNote}
                                 onChange={(e) =>
@@ -302,11 +302,11 @@ export function CorrectionPanel({
                           )}
 
                           {c.faculty_note && (
-                            <div className="rounded-lg bg-indigo-500/10 border border-indigo-500/20 p-3">
-                              <span className="text-indigo-400 font-semibold block mb-1 text-[10px] uppercase tracking-wider">
+                            <div className="rounded-lg bg-[#DCE7F8]/50 border border-[#B8CCF0] p-3">
+                              <span className="text-[#2563EB] font-semibold block mb-1 text-[10px] uppercase tracking-wider">
                                 Faculty Remark
                               </span>
-                              <p className="text-sm text-indigo-100/90">{c.faculty_note}</p>
+                              <p className="text-sm text-[#1F1F1F]">{c.faculty_note}</p>
                             </div>
                           )}
                         </motion.div>

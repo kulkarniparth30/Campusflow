@@ -288,20 +288,20 @@ export function FlashRollModal({ mode, subjectId, onClose }: FlashRollModalProps
             ) : (
               <>
                 {/* Camera Viewfinder Mock */}
-                <div className="relative flex h-52 flex-col items-center justify-center rounded-2xl border-2 border-dashed border-cyan-500/40 bg-slate-900/60 overflow-hidden text-center">
-                  <div className="absolute inset-x-8 top-1/2 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_#06b6d4] animate-pulse" />
-                  <Camera className="h-8 w-8 text-cyan-400 mb-2" />
-                  <p className="text-xs font-medium text-slate-200">Point Camera at Projector Screen</p>
-                  <p className="text-[11px] text-slate-500">Live cryptographic TOTP decoder active</p>
+                <div className="relative flex h-52 flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#B8CCF0] bg-[#F5F6F8] overflow-hidden text-center">
+                  <div className="absolute inset-x-8 top-1/2 h-0.5 bg-gradient-to-r from-transparent via-[#2563EB] to-transparent shadow-md animate-pulse" />
+                  <Camera className="h-8 w-8 text-[#2563EB] mb-2" />
+                  <p className="text-xs font-medium text-[#1F1F1F]">Point Camera at Projector Screen</p>
+                  <p className="text-[11px] text-[#666666]">Live cryptographic TOTP decoder active</p>
 
                   {/* Active session quick-fill demo button */}
                   {activeFlashRoll && (
                     <button
                       onClick={() => handleStudentScan(activeFlashRoll.token)}
                       disabled={isScanning}
-                      className="mt-3 flex items-center gap-1.5 rounded-lg border border-cyan-400/40 bg-cyan-950/80 px-3 py-1.5 text-xs font-semibold text-cyan-300 hover:bg-cyan-900/90 transition-all shadow-md shadow-cyan-950/60"
+                      className="mt-3 flex items-center gap-1.5 rounded-lg border border-[#B8CCF0] bg-[#DCE7F8] px-3 py-1.5 text-xs font-semibold text-[#2563EB] hover:bg-[#B8CCF0] transition-all shadow-sm"
                     >
-                      <ShieldCheck className="h-3.5 w-3.5 text-cyan-400" />
+                      <ShieldCheck className="h-3.5 w-3.5 text-[#2563EB]" />
                       {isScanning ? 'Verifying...' : `1-Tap Auto-Scan Token (${activeFlashRoll.token})`}
                     </button>
                   )}

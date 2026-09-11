@@ -60,12 +60,12 @@ export function PriorityFeed({ items }: { items: PriorityItem[] }) {
         </button>
       </CardHeader>
 
-      <div className="mb-4 flex items-center gap-3 rounded-xl border border-indigo-500/10 bg-indigo-500/5 p-3">
-        <Sparkles size={16} className="text-indigo-400" />
-        <div className="flex-1 text-xs text-zinc-300">
-          <span className="font-semibold text-white">🧠 AI Insights:</span> You have{' '}
-          <strong className="text-red-400">{criticalCount} critical</strong> and{' '}
-          <strong className="text-amber-400">{warningCount} warning</strong> items needing attention.
+      <div className="mb-4 flex items-center gap-3 rounded-xl border border-[#B8CCF0] bg-[#DCE7F8] p-3">
+        <Sparkles size={16} className="text-[#2563EB]" />
+        <div className="flex-1 text-xs text-[#1F1F1F]">
+          <span className="font-semibold text-[#1F1F1F]">🧠 AI Insights:</span> You have{' '}
+          <strong className="text-rose-600">{criticalCount} critical</strong> and{' '}
+          <strong className="text-amber-700">{warningCount} warning</strong> items needing attention.
         </div>
       </div>
 
@@ -77,18 +77,18 @@ export function PriorityFeed({ items }: { items: PriorityItem[] }) {
             exit={{ opacity: 0, height: 0 }}
             className="mb-3 overflow-hidden"
           >
-            <div className="rounded-xl border border-indigo-500/20 bg-indigo-500/5 p-3 text-xs text-zinc-300 space-y-1">
-              <p className="font-semibold text-indigo-300 text-[11px] uppercase tracking-wide">
+            <div className="rounded-xl border border-[#B8CCF0] bg-[#DCE7F8] p-3 text-xs text-[#1F1F1F] space-y-1">
+              <p className="font-semibold text-[#2563EB] text-[11px] uppercase tracking-wide">
                 Dynamic Ranking Formula:
               </p>
-              <p className="text-[11px] text-zinc-400">
-                • <span className="text-zinc-200">Deadline Score</span> = 90 / (Days to deadline + 0.4)
+              <p className="text-[11px] text-[#666666]">
+                • <span className="text-[#1F1F1F]">Deadline Score</span> = 90 / (Days to deadline + 0.4)
               </p>
-              <p className="text-[11px] text-zinc-400">
-                • <span className="text-zinc-200">Urgency Weight</span> = Urgency rating (1–5) × 8
+              <p className="text-[11px] text-[#666666]">
+                • <span className="text-[#1F1F1F]">Urgency Weight</span> = Urgency rating (1–5) × 8
               </p>
-              <p className="text-[11px] text-zinc-400">
-                • <span className="text-zinc-200">Attendance Risk</span> = 40 + (Min% - Current%) × 4
+              <p className="text-[11px] text-[#666666]">
+                • <span className="text-[#1F1F1F]">Attendance Risk</span> = 40 + (Min% - Current%) × 4
               </p>
             </div>
           </motion.div>
@@ -107,10 +107,10 @@ export function PriorityFeed({ items }: { items: PriorityItem[] }) {
             item.kind === 'attendance' || (item.kind === 'notice' && item.score > 60) || item.score > 80
 
           const gradientBg = isCritical
-            ? 'bg-gradient-to-br from-red-500/20 to-orange-500/20 border-red-500/30 text-red-300'
+            ? 'bg-rose-50 border-rose-200 text-rose-700'
             : item.score > 65
-              ? 'bg-gradient-to-br from-amber-500/20 to-yellow-500/20 border-amber-500/30 text-amber-300'
-              : 'bg-gradient-to-br from-indigo-500/20 to-blue-500/20 border-indigo-500/30 text-indigo-300'
+              ? 'bg-amber-50 border-amber-200 text-amber-800'
+              : 'bg-[#DCE7F8] border-[#B8CCF0] text-[#2563EB]'
 
           let plan = null
           if (item.kind === 'deadline' || item.kind === 'exam') {
@@ -134,25 +134,25 @@ export function PriorityFeed({ items }: { items: PriorityItem[] }) {
               key={item.id}
               onMouseEnter={() => setHoveredId(item.id)}
               onMouseLeave={() => setHoveredId(null)}
-              className="group relative flex flex-col gap-3 rounded-xl border border-white/6 bg-white/4 p-3 hover:border-white/12 hover:bg-white/6 transition-all"
+              className="group relative flex flex-col gap-3 rounded-xl border border-[#E2E6ED] bg-white p-3 hover:border-[#B8CCF0] hover:shadow-md transition-all"
             >
               <div className="flex items-start gap-3">
                 <div
                   className={cn(
-                    'mt-0.5 rounded-lg p-2 border shadow-sm',
-                    isCritical ? 'bg-red-500/15 border-red-500/20 text-red-300' : 'bg-indigo-500/15 border-indigo-500/20 text-indigo-300'
+                    'mt-0.5 rounded-lg p-2 border shadow-xs',
+                    isCritical ? 'bg-rose-50 border-rose-200 text-rose-700' : 'bg-[#DCE7F8] border-[#B8CCF0] text-[#2563EB]'
                   )}
                 >
                   {item.kind === 'attendance' ? <AlertTriangle size={15} /> : <Icon size={15} />}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-2">
-                    <p className="truncate text-sm font-semibold text-zinc-100 group-hover:text-white transition-colors">
+                    <p className="truncate text-sm font-bold text-[#1F1F1F]">
                       {item.title}
                     </p>
                     <div
                       className={cn(
-                        'flex items-center gap-1.5 shrink-0 rounded-full px-2 py-0.5 border',
+                        'flex items-center gap-1.5 shrink-0 rounded-full px-2 py-0.5 border font-mono',
                         gradientBg
                       )}
                     >
@@ -161,8 +161,8 @@ export function PriorityFeed({ items }: { items: PriorityItem[] }) {
                     </div>
                   </div>
                   <div className="flex items-center justify-between mt-1.5 text-xs">
-                    <div className="flex items-center gap-2 text-zinc-400">
-                      <span className="flex items-center gap-1 rounded bg-black/30 px-1.5 py-0.5 text-[10px] uppercase tracking-wide">
+                    <div className="flex items-center gap-2 text-[#666666]">
+                      <span className="flex items-center gap-1 rounded bg-[#F5F6F8] border border-[#E2E6ED] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#1F1F1F]">
                         <Icon size={10} />
                         {item.kind}
                       </span>
@@ -171,7 +171,7 @@ export function PriorityFeed({ items }: { items: PriorityItem[] }) {
                     <span
                       className={cn(
                         'text-[11px] font-medium shrink-0',
-                        isCritical ? 'text-red-400' : 'text-indigo-300'
+                        isCritical ? 'text-rose-600' : 'text-[#2563EB]'
                       )}
                     >
                       {item.actionHint}
@@ -186,23 +186,23 @@ export function PriorityFeed({ items }: { items: PriorityItem[] }) {
                     initial={{ opacity: 0, height: 0, marginTop: 0 }}
                     animate={{ opacity: 1, height: 'auto', marginTop: 8 }}
                     exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                    className="overflow-hidden border-t border-white/5"
+                    className="overflow-hidden border-t border-[#E2E6ED]"
                   >
                     <div className="pt-3 pb-1">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-semibold text-indigo-300 flex items-center gap-1">
+                        <span className="text-xs font-semibold text-[#2563EB] flex items-center gap-1">
                           <Sparkles size={12} /> Study Plan ({plan.total_hours}h)
                         </span>
-                        <span className="text-[10px] text-zinc-500">{plan.urgency_label}</span>
+                        <span className="text-[10px] text-[#666666]">{plan.urgency_label}</span>
                       </div>
                       <div className="grid grid-cols-2 gap-2">
                         {plan.milestones.slice(0, 2).map((ms) => (
-                          <div key={ms.id} className="rounded-lg bg-black/20 p-2 text-[10px]">
-                            <div className="flex items-center gap-1 text-zinc-300 mb-1">
-                              <CheckCircle2 size={10} className="text-zinc-500" />
+                          <div key={ms.id} className="rounded-lg bg-[#F5F6F8] border border-[#E2E6ED] p-2 text-[10px]">
+                            <div className="flex items-center gap-1 text-[#1F1F1F] mb-1">
+                              <CheckCircle2 size={10} className="text-[#2563EB]" />
                               <span className="truncate font-medium">{ms.label}</span>
                             </div>
-                            <div className="text-zinc-500 font-mono">{ms.estimated_hours}h est.</div>
+                            <div className="text-[#666666] font-mono">{ms.estimated_hours}h est.</div>
                           </div>
                         ))}
                       </div>

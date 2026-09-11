@@ -10,9 +10,9 @@ export function CardHeader({ className, ...props }: HTMLAttributes<HTMLDivElemen
 }
 
 export function CardTitle({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) {
-  return <h3 className={cn('text-sm font-semibold tracking-tight text-zinc-100', className)} {...props} />
+  return <h3 className={cn('text-sm font-semibold tracking-tight text-[#1F1F1F]', className)} {...props} />
 }
 
 export function CardHint({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) {
-  return <p className={cn('text-xs text-zinc-400', className)} {...props} />
+  return <p className={cn('text-xs text-[#666666]', className)} {...props} />
 }

@@ -75,26 +75,26 @@ export function AcademicTimeline({
   const pills: Filter[] = ['all', 'exam', 'assignment', 'event']
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col bg-white/90 backdrop-blur-md border-[#E2E6ED] shadow-sm">
       <CardHeader>
         <div>
           <div className="flex items-center gap-2">
-            <CardTitle>Unified Academic Timeline</CardTitle>
+            <CardTitle className="text-[#1F1F1F]">Unified Academic Timeline</CardTitle>
             <Badge tone="indigo">Timeline</Badge>
           </div>
-          <CardHint>Synchronized schedule of exams, assignment submissions, and campus events.</CardHint>
+          <CardHint className="text-[#666666]">Synchronized schedule of exams, assignment submissions, and campus events.</CardHint>
         </div>
       </CardHeader>
 
-      <div className="mb-4 flex flex-wrap gap-1.5">
+      <div className="mb-4 flex flex-wrap gap-1.5 px-6">
         {pills.map((p) => (
           <button
             key={p}
             onClick={() => setFilter(p)}
             className={`rounded-xl px-3 py-1 text-xs capitalize transition-all cursor-pointer ${
               filter === p
-                ? 'bg-indigo-500 font-medium text-white shadow-[0_0_12px_rgba(99,102,241,0.5)]'
-                : 'bg-white/6 text-zinc-400 hover:bg-white/10 hover:text-zinc-200'
+                ? 'bg-[#2563EB] font-medium text-white shadow-sm'
+                : 'bg-[#F5F6F8] text-[#666666] border border-[#E2E6ED] hover:bg-white hover:text-[#1F1F1F]'
             }`}
           >
             {p}
@@ -102,16 +102,16 @@ export function AcademicTimeline({
         ))}
       </div>
 
-      <div className="relative flex-1 overflow-y-auto pl-5 ml-2 pr-2">
+      <div className="relative flex-1 overflow-y-auto pl-5 ml-2 pr-4 pb-4">
         {items.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-zinc-500 space-y-2 opacity-60">
-            <SearchX size={32} className="text-zinc-600" />
+          <div className="flex flex-col items-center justify-center h-full text-[#666666] space-y-2 opacity-60">
+            <SearchX size={32} className="text-[#666666]" />
             <p className="text-sm">No upcoming {filter !== 'all' ? filter + 's' : 'events'} found.</p>
           </div>
         ) : (
           <div className="relative space-y-4">
             {/* Connecting Track Line */}
-            <div className="absolute left-[3px] top-2 bottom-4 w-px bg-gradient-to-b from-indigo-500/50 via-white/10 to-transparent" />
+            <div className="absolute left-[3px] top-2 bottom-4 w-px bg-gradient-to-b from-[#2563EB]/50 via-[#E2E6ED] to-transparent" />
             
             {items.map((item, i) => {
               const isExam = item.kind === 'exam'
@@ -119,12 +119,12 @@ export function AcademicTimeline({
               const tone = isExam ? 'crimson' : isEvent ? 'violet' : 'indigo'
               
               const nodeColor = isExam
-                ? 'bg-red-400 shadow-[0_0_12px_#f87171]'
+                ? 'bg-red-500 shadow-sm'
                 : isEvent
-                  ? 'bg-violet-400 shadow-[0_0_12px_#a78bfa]'
-                  : 'bg-indigo-400 shadow-[0_0_12px_#818cf8]'
+                  ? 'bg-purple-500 shadow-sm'
+                  : 'bg-[#2563EB] shadow-sm'
 
-              const trackColorClass = isExam ? 'bg-red-400' : isEvent ? 'bg-violet-400' : 'bg-indigo-400'
+              const trackColorClass = isExam ? 'bg-red-500' : isEvent ? 'bg-purple-500' : 'bg-[#2563EB]'
               const isUpcoming = item.daysLeft <= 3
 
               return (
@@ -145,36 +145,36 @@ export function AcademicTimeline({
                     )}
                   </div>
 
-                  <div className="rounded-xl border border-white/6 bg-white/3 p-3 transition-all hover:border-white/12 hover:bg-white/6 ml-2">
+                  <div className="rounded-xl border border-[#E2E6ED] bg-[#F5F6F8]/60 p-3 transition-all hover:border-[#B8CCF0] hover:bg-white ml-2">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="flex items-center gap-1.5 text-[11px] font-mono text-zinc-400">
-                        <Calendar size={12} className="text-indigo-400" />
+                      <span className="flex items-center gap-1.5 text-[11px] font-mono text-[#666666]">
+                        <Calendar size={12} className="text-[#2563EB]" />
                         {format(parseISO(item.at), 'EEE, d MMM · h:mm a')}
                       </span>
                       <span
                         className={`rounded-md px-1.5 py-0.5 text-[10px] font-semibold font-mono ${
                           item.daysLeft <= 2
-                            ? 'bg-red-500/20 text-red-300'
-                            : 'bg-white/8 text-zinc-400'
+                            ? 'bg-red-100 text-red-700'
+                            : 'bg-white text-[#666666] border border-[#E2E6ED]'
                         }`}
                       >
                         {item.liveCountdown}
                       </span>
                     </div>
 
-                    <p className="mt-1 text-sm font-semibold text-zinc-100">{item.title}</p>
+                    <p className="mt-1 text-sm font-semibold text-[#1F1F1F]">{item.title}</p>
                     {item.desc && (
-                      <p className="mt-0.5 text-xs text-zinc-400 line-clamp-1">{item.desc}</p>
+                      <p className="mt-0.5 text-xs text-[#666666] line-clamp-1">{item.desc}</p>
                     )}
 
                     <div className="mt-2 flex items-center gap-2 flex-wrap">
                       <Badge tone={tone}>{item.kind}</Badge>
-                      <span className="text-[11px] text-zinc-500 font-mono">{item.meta}</span>
+                      <span className="text-[11px] text-[#666666] font-mono">{item.meta}</span>
                       {item.faculty && (
-                        <span className="text-[10px] text-cyan-400 font-medium">· Prof. {item.faculty}</span>
+                        <span className="text-[10px] text-[#2563EB] font-medium">· Prof. {item.faculty}</span>
                       )}
                       {item.topic && (
-                        <span className="text-[10px] text-emerald-400 font-medium">· {item.topic}</span>
+                        <span className="text-[10px] text-emerald-700 font-medium">· {item.topic}</span>
                       )}
                     </div>
                   </div>

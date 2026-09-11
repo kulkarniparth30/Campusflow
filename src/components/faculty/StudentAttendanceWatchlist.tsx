@@ -133,11 +133,11 @@ export function StudentAttendanceWatchlist({
   }
 
   return (
-    <Card className="glass flex flex-col space-y-5">
+    <Card className="bg-white/90 backdrop-blur-md border-[#E2E6ED] shadow-sm flex flex-col space-y-5">
       <CardHeader className="flex-col gap-3 sm:flex-row sm:items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <CardTitle>Class Attendance & Student Watchlist</CardTitle>
+            <CardTitle className="text-[#1F1F1F]">Class Attendance & Student Watchlist</CardTitle>
             {criticalCount > 0 ? (
               <Badge tone="crimson" className="flex items-center gap-1">
                 <AlertTriangle size={11} /> {criticalCount} at Risk (&lt;75%)
@@ -146,8 +146,8 @@ export function StudentAttendanceWatchlist({
               <Badge tone="emerald">All Students Compliant</Badge>
             )}
           </div>
-          <CardHint>
-            Class Average: <span className="font-mono text-cyan-300 font-bold">{averageClassPct.toFixed(1)}%</span> · Monitor individual attendance shortfalls & message low-attendance students.
+          <CardHint className="text-[#666666]">
+            Class Average: <span className="font-mono text-[#2563EB] font-bold">{averageClassPct.toFixed(1)}%</span> · Monitor individual attendance shortfalls & message low-attendance students.
           </CardHint>
         </div>
 
@@ -158,7 +158,7 @@ export function StudentAttendanceWatchlist({
             <select
               value={selectedSubjectId}
               onChange={(e) => setSelectedSubjectId(e.target.value)}
-              className="h-9 rounded-xl border border-white/10 bg-slate-900 px-3 text-xs text-zinc-200 outline-none focus:border-cyan-400"
+              className="h-9 rounded-xl border border-[#E2E6ED] bg-[#F5F6F8] px-3 text-xs text-[#1F1F1F] outline-none focus:border-[#2563EB]"
             >
               {subjects.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -169,12 +169,12 @@ export function StudentAttendanceWatchlist({
           )}
 
           {/* Mode Switcher */}
-          <div className="flex items-center rounded-xl border border-white/10 bg-black/40 p-0.5 text-xs">
+          <div className="flex items-center rounded-xl border border-[#E2E6ED] bg-[#F5F6F8] p-0.5 text-xs">
             <button
               onClick={() => setViewMode('roster')}
               className={cn(
                 "px-3 py-1 rounded-lg transition-all font-medium cursor-pointer flex items-center gap-1",
-                viewMode === 'roster' ? "bg-cyan-500 text-slate-950 font-bold" : "text-zinc-400 hover:text-white"
+                viewMode === 'roster' ? "bg-[#2563EB] text-white font-bold shadow-sm" : "text-[#666666] hover:text-[#1F1F1F]"
               )}
             >
               <Users size={12} /> Student Roster
@@ -183,7 +183,7 @@ export function StudentAttendanceWatchlist({
               onClick={() => setViewMode('mark')}
               className={cn(
                 "px-3 py-1 rounded-lg transition-all font-medium cursor-pointer flex items-center gap-1",
-                viewMode === 'mark' ? "bg-cyan-500 text-slate-950 font-bold" : "text-zinc-400 hover:text-white"
+                viewMode === 'mark' ? "bg-[#2563EB] text-white font-bold shadow-sm" : "text-[#666666] hover:text-[#1F1F1F]"
               )}
             >
               <FileSpreadsheet size={12} /> Take Session
@@ -197,24 +197,24 @@ export function StudentAttendanceWatchlist({
         <div className="space-y-4">
           {/* Quick Metrics Bar */}
           <div className="grid grid-cols-3 gap-2">
-            <div className="rounded-xl border border-white/10 bg-black/30 p-2.5 text-center">
-              <span className="text-[10px] text-zinc-400 uppercase font-semibold">Total Students</span>
-              <p className="text-lg font-bold text-white font-mono mt-0.5">{students.length}</p>
+            <div className="rounded-xl border border-[#E2E6ED] bg-[#F5F6F8] p-2.5 text-center">
+              <span className="text-[10px] text-[#666666] uppercase font-semibold">Total Students</span>
+              <p className="text-lg font-bold text-[#1F1F1F] font-mono mt-0.5">{students.length}</p>
             </div>
-            <div className="rounded-xl border border-cyan-500/20 bg-cyan-950/20 p-2.5 text-center">
-              <span className="text-[10px] text-cyan-400 uppercase font-semibold">Class Attendance</span>
-              <p className="text-lg font-bold text-cyan-300 font-mono mt-0.5">{averageClassPct.toFixed(1)}%</p>
+            <div className="rounded-xl border border-[#B8CCF0] bg-[#DCE7F8]/40 p-2.5 text-center">
+              <span className="text-[10px] text-[#2563EB] uppercase font-semibold">Class Attendance</span>
+              <p className="text-lg font-bold text-[#2563EB] font-mono mt-0.5">{averageClassPct.toFixed(1)}%</p>
             </div>
-            <div className="rounded-xl border border-red-500/20 bg-red-950/20 p-2.5 text-center">
-              <span className="text-[10px] text-red-400 uppercase font-semibold">Below 75% Threshold</span>
-              <p className="text-lg font-bold text-red-400 font-mono mt-0.5">{criticalCount} Students</p>
+            <div className="rounded-xl border border-red-200 bg-red-50 p-2.5 text-center">
+              <span className="text-[10px] text-red-600 uppercase font-semibold">Below 75% Threshold</span>
+              <p className="text-lg font-bold text-red-600 font-mono mt-0.5">{criticalCount} Students</p>
             </div>
           </div>
 
           {/* Roster Table */}
-          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/40">
+          <div className="overflow-x-auto rounded-2xl border border-[#E2E6ED] bg-white">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-white/10 bg-slate-900/60 text-zinc-400 uppercase font-mono text-[10px]">
+              <thead className="border-b border-[#E2E6ED] bg-[#F5F6F8] text-[#666666] uppercase font-mono text-[10px]">
                 <tr>
                   <th className="py-3 px-4">Student Name & Roll No</th>
                   <th className="py-3 px-3 text-center">Attended / Total</th>
@@ -224,19 +224,19 @@ export function StudentAttendanceWatchlist({
                   <th className="py-3 px-4 text-right">Faculty Intervention</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#E2E6ED]">
                 {studentStats.map((item) => (
-                  <tr key={item.stu.id} className="hover:bg-white/3 transition-colors">
+                  <tr key={item.stu.id} className="hover:bg-[#F5F6F8]/60 transition-colors">
                     <td className="py-3.5 px-4">
-                      <div className="font-bold text-white text-sm">{item.stu.full_name}</div>
-                      <div className="text-zinc-400 font-mono text-[11px]">{item.stu.roll_no || 'CS21B1000'} · Semester {item.stu.semester || 6}</div>
+                      <div className="font-bold text-[#1F1F1F] text-sm">{item.stu.full_name}</div>
+                      <div className="text-[#666666] font-mono text-[11px]">{item.stu.roll_no || 'CS21B1000'} · Semester {item.stu.semester || 6}</div>
                     </td>
 
-                    <td className="py-3.5 px-3 text-center font-mono text-zinc-200">
-                      <span className="font-bold text-white">{item.attended}</span> / {item.total}
+                    <td className="py-3.5 px-3 text-center font-mono text-[#1F1F1F]">
+                      <span className="font-bold">{item.attended}</span> / {item.total}
                     </td>
 
-                    <td className="py-3.5 px-3 text-center font-mono text-red-400 font-semibold">
+                    <td className="py-3.5 px-3 text-center font-mono text-red-600 font-semibold">
                       {item.missed} class{item.missed === 1 ? '' : 'es'}
                     </td>
 
@@ -245,10 +245,10 @@ export function StudentAttendanceWatchlist({
                         className={cn(
                           "font-mono font-bold text-sm px-2.5 py-1 rounded-lg border",
                           item.isCritical
-                            ? "bg-red-500/20 text-red-300 border-red-500/40 shadow-[0_0_12px_rgba(239,68,68,0.2)]"
+                            ? "bg-red-50 text-red-700 border-red-200"
                             : item.isWarning
-                            ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                            : "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+                            ? "bg-amber-50 text-amber-700 border-amber-200"
+                            : "bg-emerald-50 text-emerald-700 border-emerald-200"
                         )}
                       >
                         {item.pct.toFixed(1)}%
@@ -257,15 +257,15 @@ export function StudentAttendanceWatchlist({
 
                     <td className="py-3.5 px-3 text-center">
                       {item.isCritical ? (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-red-500/20 text-red-300 border border-red-500/30">
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200">
                           <XCircle size={11} /> Critical Shortfall
                         </span>
                       ) : item.isWarning ? (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
                           <AlertTriangle size={11} /> Borderline Risk
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
                           <CheckCircle2 size={11} /> Examination Eligible
                         </span>
                       )}
@@ -276,7 +276,7 @@ export function StudentAttendanceWatchlist({
                         <Button
                           size="sm"
                           onClick={() => handleOpenWarning(item)}
-                          className="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 text-xs font-bold"
+                          className="bg-red-50 text-red-700 border border-red-200 hover:bg-red-100 text-xs font-bold"
                         >
                           <Send size={11} className="mr-1.5" /> Send Warning Nudge
                         </Button>
@@ -285,7 +285,7 @@ export function StudentAttendanceWatchlist({
                           size="sm"
                           variant="ghost"
                           onClick={() => handleOpenWarning(item)}
-                          className="text-zinc-400 hover:text-zinc-200 text-xs"
+                          className="text-[#666666] hover:text-[#1F1F1F] text-xs"
                         >
                           Message Student
                         </Button>
@@ -300,45 +300,45 @@ export function StudentAttendanceWatchlist({
       ) : (
         /* Mode 2: Batch Session Marker */
         <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 rounded-2xl bg-black/40 border border-white/10">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 rounded-2xl bg-[#F5F6F8] border border-[#E2E6ED]">
             <div className="flex items-center gap-2">
-              <Calendar size={15} className="text-cyan-400" />
-              <span className="text-xs font-semibold text-zinc-300">Marking Session Date:</span>
+              <Calendar size={15} className="text-[#2563EB]" />
+              <span className="text-xs font-semibold text-[#1F1F1F]">Marking Session Date:</span>
               <input
                 type="date"
                 value={sessionDate}
                 onChange={(e) => setSessionDate(e.target.value)}
-                className="h-8 rounded-xl border border-white/10 bg-slate-900 px-3 text-xs text-zinc-200 outline-none focus:border-cyan-400"
+                className="h-8 rounded-xl border border-[#E2E6ED] bg-white px-3 text-xs text-[#1F1F1F] outline-none focus:border-[#2563EB]"
               />
             </div>
 
             <div className="flex items-center gap-1.5">
-              <span className="text-xs text-zinc-400 mr-1">Batch Mark:</span>
-              <Button size="sm" variant="outline" onClick={() => setAllMarks('present')} className="text-xs text-emerald-400">
+              <span className="text-xs text-[#666666] mr-1">Batch Mark:</span>
+              <Button size="sm" variant="outline" onClick={() => setAllMarks('present')} className="text-xs text-emerald-700 border-emerald-200 bg-emerald-50">
                 All Present
               </Button>
-              <Button size="sm" variant="outline" onClick={() => setAllMarks('absent')} className="text-xs text-red-400">
+              <Button size="sm" variant="outline" onClick={() => setAllMarks('absent')} className="text-xs text-red-700 border-red-200 bg-red-50">
                 All Absent
               </Button>
             </div>
           </div>
 
-          <div className="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/40">
+          <div className="overflow-x-auto rounded-2xl border border-[#E2E6ED] bg-white">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-white/10 bg-slate-900/60 text-zinc-400 uppercase font-mono text-[10px]">
+              <thead className="border-b border-[#E2E6ED] bg-[#F5F6F8] text-[#666666] uppercase font-mono text-[10px]">
                 <tr>
                   <th className="py-3 px-4">Student</th>
                   <th className="py-3 px-4">Roll Number</th>
                   <th className="py-3 px-4 text-center">Session Attendance Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#E2E6ED]">
                 {students.map((s) => {
                   const curStatus = marks[s.id] || 'present'
                   return (
-                    <tr key={s.id} className="hover:bg-white/3 transition-colors">
-                      <td className="py-3 px-4 font-semibold text-white">{s.full_name}</td>
-                      <td className="py-3 px-4 font-mono text-zinc-400">{s.roll_no || 'CS21B1000'}</td>
+                    <tr key={s.id} className="hover:bg-[#F5F6F8]/60 transition-colors">
+                      <td className="py-3 px-4 font-semibold text-[#1F1F1F]">{s.full_name}</td>
+                      <td className="py-3 px-4 font-mono text-[#666666]">{s.roll_no || 'CS21B1000'}</td>
                       <td className="py-3 px-4">
                         <div className="flex items-center justify-center gap-1">
                           <button
@@ -347,8 +347,8 @@ export function StudentAttendanceWatchlist({
                             className={cn(
                               "px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1",
                               curStatus === 'present'
-                                ? "bg-emerald-500 text-slate-950 shadow-[0_0_12px_rgba(52,211,153,0.4)]"
-                                : "bg-black/30 text-zinc-400 hover:text-emerald-300"
+                                ? "bg-emerald-600 text-white shadow-sm"
+                                : "bg-[#F5F6F8] text-[#666666] hover:text-emerald-700 border border-[#E2E6ED]"
                             )}
                           >
                             <Check size={12} /> Present
@@ -359,8 +359,8 @@ export function StudentAttendanceWatchlist({
                             className={cn(
                               "px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1",
                               curStatus === 'absent'
-                                ? "bg-red-500 text-white shadow-[0_0_12px_rgba(239,68,68,0.4)]"
-                                : "bg-black/30 text-zinc-400 hover:text-red-300"
+                                ? "bg-red-600 text-white shadow-sm"
+                                : "bg-[#F5F6F8] text-[#666666] hover:text-red-700 border border-[#E2E6ED]"
                             )}
                           >
                             <XCircle size={12} /> Absent
@@ -371,8 +371,8 @@ export function StudentAttendanceWatchlist({
                             className={cn(
                               "px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1",
                               curStatus === 'late'
-                                ? "bg-amber-500 text-slate-950 shadow-[0_0_12px_rgba(245,158,11,0.4)]"
-                                : "bg-black/30 text-zinc-400 hover:text-amber-300"
+                                ? "bg-amber-500 text-white shadow-sm"
+                                : "bg-[#F5F6F8] text-[#666666] hover:text-amber-700 border border-[#E2E6ED]"
                             )}
                           >
                             <Clock size={12} /> Late
@@ -387,7 +387,7 @@ export function StudentAttendanceWatchlist({
           </div>
 
           <div className="flex justify-end pt-2">
-            <Button onClick={handleSaveMarks} className="bg-cyan-500 text-slate-950 hover:bg-cyan-400 font-bold">
+            <Button onClick={handleSaveMarks} className="bg-[#2563EB] text-white hover:bg-[#1D4ED8] font-bold shadow-md shadow-[#2563EB]/20">
               <UserCheck size={14} className="mr-1.5" /> Save Attendance Register
             </Button>
           </div>
@@ -397,60 +397,60 @@ export function StudentAttendanceWatchlist({
       {/* Nudge / Warning Modal */}
       <AnimatePresence>
         {warningStudent && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-lg rounded-3xl border border-red-500/40 bg-slate-950 p-6 shadow-[0_0_50px_rgba(239,68,68,0.25)] space-y-4"
+              className="relative w-full max-w-lg rounded-3xl border border-red-200 bg-white p-6 shadow-xl space-y-4"
             >
-              <div className="flex items-start justify-between pb-3 border-b border-white/10">
+              <div className="flex items-start justify-between pb-3 border-b border-[#E2E6ED]">
                 <div className="flex items-center gap-2">
-                  <span className="p-2 rounded-xl bg-red-500/20 text-red-300 border border-red-500/30">
+                  <span className="p-2 rounded-xl bg-red-50 text-red-600 border border-red-200">
                     <ShieldAlert size={18} />
                   </span>
                   <div>
-                    <h3 className="text-base font-bold text-white">Send Attendance Shortfall Warning</h3>
-                    <p className="text-xs text-zinc-400">
+                    <h3 className="text-base font-bold text-[#1F1F1F]">Send Attendance Shortfall Warning</h3>
+                    <p className="text-xs text-[#666666]">
                       Dispatches an official academic notice to {warningStudent.student.full_name}
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => setWarningStudent(null)}
-                  className="text-zinc-400 hover:text-white p-1 rounded-xl"
+                  className="text-[#666666] hover:text-[#1F1F1F] p-1 rounded-xl"
                 >
                   <X size={18} />
                 </button>
               </div>
 
-              <div className="p-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-xs flex items-center justify-between">
-                <span className="text-red-300">
+              <div className="p-3 rounded-2xl bg-red-50 border border-red-200 text-xs flex items-center justify-between">
+                <span className="text-red-700">
                   Current Attendance: <strong className="font-mono text-sm">{warningStudent.pct.toFixed(1)}%</strong>
                 </span>
-                <span className="text-zinc-400 font-mono">
+                <span className="text-[#666666] font-mono">
                   {warningStudent.attended} attended / {warningStudent.total} sessions
                 </span>
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-zinc-300 mb-1.5 block">Official Notice Content</label>
+                <label className="text-xs font-semibold text-[#1F1F1F] mb-1.5 block">Official Notice Content</label>
                 <Textarea
                   rows={5}
                   value={warningMessage}
                   onChange={(e) => setWarningMessage(e.target.value)}
-                  className="text-xs bg-black/40 leading-relaxed font-sans"
+                  className="text-xs bg-[#F5F6F8] border-[#E2E6ED] text-[#1F1F1F] leading-relaxed font-sans"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-white/10">
-                <Button variant="ghost" size="sm" onClick={() => setWarningStudent(null)}>
+              <div className="flex justify-end gap-2 pt-2 border-t border-[#E2E6ED]">
+                <Button variant="ghost" size="sm" onClick={() => setWarningStudent(null)} className="text-[#666666]">
                   Cancel
                 </Button>
                 <Button
                   size="sm"
                   onClick={handleDispatchWarning}
-                  className="bg-red-500 text-white hover:bg-red-600 font-bold"
+                  className="bg-red-600 text-white hover:bg-red-700 font-bold"
                 >
                   <Send size={13} className="mr-1.5" /> Dispatch Urgent Warning
                 </Button>

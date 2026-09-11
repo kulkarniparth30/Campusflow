@@ -85,15 +85,15 @@ export function Timetable({ slots, subjects }: TimetableProps) {
   return (
     <div className="space-y-4">
       {/* Controls & Day Selector */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 glass rounded-2xl p-3 border border-white/10">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 glass rounded-2xl p-3 border border-[#E2E6ED] bg-white">
         <div className="flex items-center flex-wrap gap-1.5">
           <button
             onClick={() => setSelectedDay('all')}
             className={cn(
               "px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer",
               selectedDay === 'all'
-                ? "bg-cyan-500 text-slate-950 font-bold shadow-[0_0_15px_rgba(6,182,212,0.4)]"
-                : "text-zinc-400 hover:text-white hover:bg-white/5"
+                ? "bg-[#2563EB] text-white font-bold shadow-md"
+                : "text-[#666666] hover:text-[#1F1F1F] hover:bg-[#F5F6F8]"
             )}
           >
             All Days Matrix
@@ -109,15 +109,15 @@ export function Timetable({ slots, subjects }: TimetableProps) {
                 className={cn(
                   "relative px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5",
                   isSelected
-                    ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+                    ? "bg-[#2563EB] text-white font-bold shadow-md"
                     : isToday
-                    ? "text-cyan-400 border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20"
-                    : "text-zinc-400 hover:text-white hover:bg-white/5"
+                    ? "text-[#2563EB] border border-[#B8CCF0] bg-[#DCE7F8]"
+                    : "text-[#666666] hover:text-[#1F1F1F] hover:bg-[#F5F6F8]"
                 )}
               >
                 <span>{d.short}</span>
                 {isToday && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" title="Today" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB] animate-pulse" title="Today" />
                 )}
               </button>
             )
@@ -127,7 +127,7 @@ export function Timetable({ slots, subjects }: TimetableProps) {
         {todayId && (
           <button
             onClick={() => setSelectedDay(todayId)}
-            className="flex items-center gap-1.5 text-xs text-cyan-300 font-medium px-3 py-1 rounded-xl bg-cyan-500/10 border border-cyan-500/30 hover:bg-cyan-500/20 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 text-xs text-[#2563EB] font-semibold px-3 py-1 rounded-xl bg-[#DCE7F8] border border-[#B8CCF0] hover:bg-[#B8CCF0] transition-all cursor-pointer"
           >
             <Compass size={13} />
             Jump to Today ({DAYS.find((d) => d.id === todayId)?.short})
@@ -149,24 +149,24 @@ export function Timetable({ slots, subjects }: TimetableProps) {
           >
             <div className="flex items-center justify-between px-2">
               <div className="flex items-center gap-2">
-                <Calendar size={16} className="text-cyan-400" />
-                <h3 className="text-base font-bold text-white">
+                <Calendar size={16} className="text-[#2563EB]" />
+                <h3 className="text-base font-bold text-[#1F1F1F]">
                   {DAYS.find((d) => d.id === selectedDay)?.label} Schedule
                 </h3>
                 {selectedDay === todayId && (
                   <Badge tone="cyan" className="text-[10px]">Today</Badge>
                 )}
               </div>
-              <span className="text-xs text-zinc-400 font-mono">
+              <span className="text-xs text-[#666666] font-mono">
                 {daySlots.length} scheduled period{daySlots.length === 1 ? '' : 's'}
               </span>
             </div>
 
             {daySlots.length === 0 ? (
-              <div className="glass rounded-2xl p-12 text-center text-zinc-500">
-                <Clock size={32} className="mx-auto mb-2 opacity-50 text-cyan-400" />
-                <p className="text-sm font-medium text-zinc-300">No scheduled sessions for this day</p>
-                <p className="text-xs text-zinc-500 mt-1">Enjoy your study break or project sprint.</p>
+              <div className="glass rounded-2xl p-12 text-center text-[#666666] bg-white border border-[#E2E6ED]">
+                <Clock size={32} className="mx-auto mb-2 opacity-50 text-[#2563EB]" />
+                <p className="text-sm font-medium text-[#1F1F1F]">No scheduled sessions for this day</p>
+                <p className="text-xs text-[#666666] mt-1">Enjoy your study break or project sprint.</p>
               </div>
             ) : (
               <div className="grid gap-3">
@@ -182,40 +182,40 @@ export function Timetable({ slots, subjects }: TimetableProps) {
                       className={cn(
                         "relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 rounded-2xl border transition-all",
                         inSession
-                          ? "bg-cyan-500/10 border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.2)]"
-                          : "glass border-white/10 hover:border-cyan-500/30 hover:bg-white/5"
+                          ? "bg-[#DCE7F8] border-[#2563EB] shadow-md"
+                          : "glass border-[#E2E6ED] bg-white hover:border-[#B8CCF0] hover:shadow-sm"
                       )}
                     >
                       {/* Left: Time & Subject info */}
                       <div className="flex items-start gap-4">
-                        <div className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-slate-900 border border-white/10 shrink-0 min-w-[95px]">
-                          <span className="text-xs font-mono font-bold text-cyan-300">{slot.start_time}</span>
-                          <span className="text-[10px] text-zinc-500 font-mono">to</span>
-                          <span className="text-xs font-mono text-zinc-400">{slot.end_time}</span>
+                        <div className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#F5F6F8] border border-[#E2E6ED] shrink-0 min-w-[95px]">
+                          <span className="text-xs font-mono font-bold text-[#2563EB]">{slot.start_time}</span>
+                          <span className="text-[10px] text-[#666666] font-mono">to</span>
+                          <span className="text-xs font-mono text-[#666666]">{slot.end_time}</span>
                         </div>
 
                         <div>
                           <div className="flex items-center gap-2 flex-wrap mb-1">
-                            <span className="px-2 py-0.5 rounded-md text-xs font-bold font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                            <span className="px-2 py-0.5 rounded-md text-xs font-bold font-mono bg-[#DCE7F8] text-[#2563EB] border border-[#B8CCF0]">
                               {subject?.code || 'CS'}
                             </span>
-                            <h4 className="text-sm font-bold text-white">{subject?.name || 'Class Session'}</h4>
+                            <h4 className="text-sm font-bold text-[#1F1F1F]">{subject?.name || 'Class Session'}</h4>
                             {getTypeBadge(slot.type)}
                             {inSession && (
-                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500 text-slate-950 animate-pulse">
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#2563EB] text-white animate-pulse">
                                 <Sparkles size={10} /> NOW IN SESSION
                               </span>
                             )}
                           </div>
 
-                          <div className="flex items-center gap-4 text-xs text-zinc-400 mt-2 flex-wrap">
-                            <span className="flex items-center gap-1 text-zinc-300">
-                              <User size={12} className="text-cyan-400" />
-                              Faculty: <strong className="text-white">{subject?.faculty_name || 'Dr. Kavya Iyer'}</strong>
+                          <div className="flex items-center gap-4 text-xs text-[#666666] mt-2 flex-wrap">
+                            <span className="flex items-center gap-1 text-[#1F1F1F]">
+                              <User size={12} className="text-[#2563EB]" />
+                              Faculty: <strong className="text-[#1F1F1F]">{subject?.faculty_name || 'Dr. Kavya Iyer'}</strong>
                             </span>
-                            <span className="flex items-center gap-1 text-zinc-300">
-                              <MapPin size={12} className="text-blue-400" />
-                              Location: <strong className="text-white">{slot.room}</strong>
+                            <span className="flex items-center gap-1 text-[#1F1F1F]">
+                              <MapPin size={12} className="text-[#2563EB]" />
+                              Location: <strong className="text-[#1F1F1F]">{slot.room}</strong>
                             </span>
                           </div>
                         </div>
@@ -225,8 +225,8 @@ export function Timetable({ slots, subjects }: TimetableProps) {
                       {subject && (
                         <div className="flex items-center gap-3 shrink-0 self-end md:self-center">
                           <div className="text-right">
-                            <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Attendance Target</div>
-                            <div className="text-xs font-mono font-bold text-cyan-400">
+                            <div className="text-[10px] text-[#666666] uppercase tracking-wider">Attendance Target</div>
+                            <div className="text-xs font-mono font-bold text-[#2563EB]">
                               {subject.min_attendance_pct}% Min Required
                             </div>
                           </div>
@@ -245,12 +245,12 @@ export function Timetable({ slots, subjects }: TimetableProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="glass glow-border rounded-3xl p-6 overflow-x-auto"
+            className="glass glow-border rounded-3xl p-6 overflow-x-auto bg-white border border-[#E2E6ED]"
           >
             <div className="min-w-[900px]">
               <div className="grid grid-cols-7 gap-3">
                 {/* Header Row */}
-                <div className="flex items-center justify-center text-xs font-bold uppercase tracking-wider text-zinc-500 pb-3 border-b border-white/10">
+                <div className="flex items-center justify-center text-xs font-bold uppercase tracking-wider text-[#666666] pb-3 border-b border-[#E2E6ED]">
                   Time Slot
                 </div>
                 {DAYS.map((d) => (
@@ -258,13 +258,13 @@ export function Timetable({ slots, subjects }: TimetableProps) {
                     key={d.id}
                     onClick={() => setSelectedDay(d.id)}
                     className={cn(
-                      "flex flex-col items-center justify-center pb-3 border-b border-white/10 transition-colors cursor-pointer group",
-                      d.id === todayId ? "text-cyan-400 border-cyan-500" : "text-zinc-400 hover:text-white"
+                      "flex flex-col items-center justify-center pb-3 border-b border-[#E2E6ED] transition-colors cursor-pointer group",
+                      d.id === todayId ? "text-[#2563EB] border-[#2563EB]" : "text-[#666666] hover:text-[#1F1F1F]"
                     )}
                   >
-                    <span className="text-sm font-bold group-hover:text-cyan-300 transition-colors">{d.label}</span>
+                    <span className="text-sm font-bold group-hover:text-[#2563EB] transition-colors">{d.label}</span>
                     {d.id === todayId && (
-                      <span className="text-[10px] text-cyan-400 font-mono mt-0.5">Today</span>
+                      <span className="text-[10px] text-[#2563EB] font-mono mt-0.5">Today</span>
                     )}
                   </button>
                 ))}
@@ -272,7 +272,7 @@ export function Timetable({ slots, subjects }: TimetableProps) {
                 {/* Time Rows */}
                 {TIMES.map((time) => (
                   <div className="col-span-7 grid grid-cols-7 gap-3 py-1.5" key={time}>
-                    <div className="flex items-center justify-center text-xs font-mono font-bold text-zinc-400 bg-slate-900/50 rounded-xl border border-white/5 py-2">
+                    <div className="flex items-center justify-center text-xs font-mono font-bold text-[#1F1F1F] bg-[#F5F6F8] rounded-xl border border-[#E2E6ED] py-2">
                       {time}
                     </div>
 
@@ -289,35 +289,35 @@ export function Timetable({ slots, subjects }: TimetableProps) {
                               className={cn(
                                 "h-full rounded-xl border p-2.5 flex flex-col justify-between transition-all cursor-pointer hover:scale-[1.02]",
                                 inSession
-                                  ? "border-cyan-500 bg-cyan-500/15 shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+                                  ? "border-[#2563EB] bg-[#DCE7F8] shadow-sm"
                                   : slot.type === 'lab'
-                                  ? "border-cyan-500/20 bg-cyan-950/20 hover:border-cyan-500/40"
-                                  : "border-blue-500/20 bg-blue-950/20 hover:border-blue-500/40"
+                                  ? "border-[#B8CCF0] bg-cyan-50 hover:border-[#2563EB]"
+                                  : "border-[#B8CCF0] bg-[#DCE7F8]/50 hover:border-[#2563EB]"
                               )}
                             >
                               <div>
                                 <div className="flex items-center justify-between mb-1">
-                                  <span className="font-bold text-xs text-white">{subject.code}</span>
+                                  <span className="font-bold text-xs text-[#1F1F1F]">{subject.code}</span>
                                   <span className={cn(
                                     "text-[9px] px-1.5 py-0.2 rounded font-bold uppercase",
-                                    slot.type === 'lab' ? "bg-cyan-500/20 text-cyan-300" : "bg-blue-500/20 text-blue-300"
+                                    slot.type === 'lab' ? "bg-cyan-100 text-cyan-800" : "bg-[#DCE7F8] text-[#2563EB]"
                                   )}>
                                     {slot.type || 'Lec'}
                                   </span>
                                 </div>
-                                <p className="text-[10px] text-zinc-300 font-medium truncate" title={subject.faculty_name || 'Dr. Kavya Iyer'}>
+                                <p className="text-[10px] text-[#666666] font-medium truncate" title={subject.faculty_name || 'Dr. Kavya Iyer'}>
                                   {subject.faculty_name || 'Dr. Kavya Iyer'}
                                 </p>
                               </div>
 
-                              <div className="flex items-center justify-between text-[10px] text-zinc-400 pt-1 border-t border-white/5 font-mono">
+                              <div className="flex items-center justify-between text-[10px] text-[#666666] pt-1 border-t border-[#E2E6ED] font-mono">
                                 <span>{slot.room}</span>
                                 <span>{slot.start_time}-{slot.end_time}</span>
                               </div>
                             </div>
                           ) : (
-                            <div className="h-full rounded-xl border border-white/5 bg-black/10 flex items-center justify-center">
-                              <span className="text-zinc-700 text-[10px] font-mono">—</span>
+                            <div className="h-full rounded-xl border border-[#E2E6ED] bg-[#F5F6F8] flex items-center justify-center">
+                              <span className="text-[#999999] text-[10px] font-mono">—</span>
                             </div>
                           )}
                         </div>

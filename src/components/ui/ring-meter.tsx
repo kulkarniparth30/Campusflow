@@ -18,7 +18,7 @@ export function RingMeter({
   return (
     <div className="flex items-center gap-3">
       <svg width="76" height="76" viewBox="0 0 76 76">
-        <circle cx="38" cy="38" r={r} stroke="rgba(255,255,255,0.08)" strokeWidth="7" fill="none" />
+        <circle cx="38" cy="38" r={r} stroke="#E2E6ED" strokeWidth="7" fill="none" />
         <circle
           cx="38"
           cy="38"
@@ -30,13 +30,13 @@ export function RingMeter({
           strokeDasharray={`${dash} ${c}`}
           transform="rotate(-90 38 38)"
         />
-        <text x="38" y="42" textAnchor="middle" fontSize="12" fontWeight="700" fill="#e4e8f1">
+        <text x="38" y="42" textAnchor="middle" fontSize="12" fontWeight="700" fill="#1F1F1F">
           {clamped.toFixed(0)}%
         </text>
       </svg>
       <div>
-        <p className="text-sm font-semibold">{label}</p>
-        <p className="text-xs text-zinc-400">{sub}</p>
+        <p className="text-sm font-semibold text-[#1F1F1F]">{label}</p>
+        <p className="text-xs text-[#666666]">{sub}</p>
       </div>
     </div>
   )
