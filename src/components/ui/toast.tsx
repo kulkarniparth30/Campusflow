@@ -29,9 +29,9 @@ const icons: Record<ToastVariant, typeof CheckCircle2> = {
 }
 
 const styles: Record<ToastVariant, string> = {
-  success: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300',
-  error: 'border-red-500/30 bg-red-500/10 text-red-300',
-  info: 'border-indigo-500/30 bg-indigo-500/10 text-indigo-300',
+  success: 'border-emerald-200 bg-emerald-50 text-emerald-800 shadow-md',
+  error: 'border-rose-200 bg-rose-50 text-rose-800 shadow-md',
+  info: 'border-[#B8CCF0] bg-[#DCE7F8] text-[#2563EB] shadow-md',
 }
 
 let counter = 0

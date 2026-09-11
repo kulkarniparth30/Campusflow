@@ -34,9 +34,9 @@ export function CommandPalette({
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/60 pt-[12vh] backdrop-blur-sm" onClick={() => onOpenChange(false)}>
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 pt-[12vh] backdrop-blur-sm" onClick={() => onOpenChange(false)}>
       <Command
-        className="glass w-[min(640px,92vw)] overflow-hidden rounded-2xl"
+        className="glass w-[min(640px,92vw)] overflow-hidden rounded-2xl bg-white border border-[#E2E6ED] shadow-xl text-[#1F1F1F]"
         onClick={(e) => e.stopPropagation()}
       >
         <Command.Input
@@ -44,11 +44,11 @@ export function CommandPalette({
           value={q}
           onValueChange={setQ}
           placeholder="Jump to subjects, notices, exams..."
-          className="h-12 w-full border-b border-white/10 bg-transparent px-4 text-sm outline-none"
+          className="h-12 w-full border-b border-[#E2E6ED] bg-transparent px-4 text-xs text-[#1F1F1F] placeholder:text-[#999999] outline-none"
         />
         <Command.List className="max-h-80 overflow-auto p-2">
-          <Command.Empty className="px-3 py-6 text-center text-sm text-zinc-500">No matches.</Command.Empty>
-          <Command.Group heading="Navigate" className="px-2 py-1 text-[10px] uppercase tracking-wide text-zinc-500">
+          <Command.Empty className="px-3 py-6 text-center text-sm text-[#666666]">No matches.</Command.Empty>
+          <Command.Group heading="Navigate" className="px-2 py-1 text-[10px] uppercase tracking-wide text-[#666666]">
             <Item onSelect={() => { onNavigate('command'); onOpenChange(false) }} icon={<GraduationCap size={14} />}>
               Student Command Center
             </Item>
@@ -98,9 +98,9 @@ function Item({
   return (
     <Command.Item
       onSelect={onSelect}
-      className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm data-[selected=true]:bg-indigo-500/20"
+      className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-xs text-[#1F1F1F] data-[selected=true]:bg-[#DCE7F8] data-[selected=true]:text-[#2563EB]"
     >
-      <span className="text-indigo-300">{icon}</span>
+      <span className="text-[#2563EB]">{icon}</span>
       {children}
     </Command.Item>
   )

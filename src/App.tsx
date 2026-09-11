@@ -119,7 +119,7 @@ function AuthenticatedApp({
         ) : (
           <>
             {view === 'command' && (
-              role === 'hod' ? (
+              role === 'admin' ? (
                 <HODDashboard
                   subjects={subjects}
                   students={batch}

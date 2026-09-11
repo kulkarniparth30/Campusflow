@@ -160,81 +160,81 @@ export function HODDashboard({
   return (
     <div className="space-y-6">
       {/* Institutional Department Header */}
-      <div className="relative overflow-hidden rounded-3xl border border-cyan-500/25 bg-gradient-to-r from-[#090d16] via-[#0c1626] to-[#090d16] p-6 sm:p-8 shadow-[0_0_40px_rgba(6,182,212,0.12)]">
-        <div className="absolute top-0 right-0 h-64 w-64 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-3xl border border-[#E2E6ED] bg-white/90 backdrop-blur-md p-6 sm:p-8 shadow-sm">
+        <div className="absolute top-0 right-0 h-64 w-64 rounded-full bg-[#B8CCF0]/30 blur-3xl pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex items-center gap-2.5">
-              <span className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/40">
+              <span className="p-2 rounded-xl bg-[#DCE7F8] text-[#2563EB] border border-[#B8CCF0]">
                 <Building2 size={22} />
               </span>
               <Badge tone="cyan" className="tracking-wider uppercase text-[10px] font-bold">
                 ERP Academic Governance · Level 2 HOD
               </Badge>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black text-[#1F1F1F] tracking-tight">
               Department of Computer Science & Engineering
             </h1>
-            <p className="text-xs sm:text-sm text-zinc-400 flex items-center gap-2">
-              <GraduationCap size={15} className="text-cyan-400" />
-              Department Head: <strong className="text-zinc-200">Prof. Ramanathan Sharma, Ph.D.</strong>
-              <span className="text-zinc-600">·</span>
-              <span className="text-cyan-400 font-mono">Academic Year 2025-2026 (Sem 6)</span>
+            <p className="text-xs sm:text-sm text-[#666666] flex items-center gap-2">
+              <GraduationCap size={15} className="text-[#2563EB]" />
+              Department Head: <strong className="text-[#1F1F1F]">Prof. Ramanathan Sharma, Ph.D.</strong>
+              <span className="text-[#E2E6ED]">·</span>
+              <span className="text-[#2563EB] font-mono">Academic Year 2025-2026 (Sem 6)</span>
             </p>
           </div>
 
           <div className="flex items-center gap-2 self-start md:self-auto">
             <Badge tone="indigo" className="px-3 py-1.5 text-xs font-semibold">
-              <ShieldCheck size={14} className="mr-1.5 text-indigo-400" />
+              <ShieldCheck size={14} className="mr-1.5 text-indigo-600" />
               Allocation Matrix Authority Active
             </Badge>
           </div>
         </div>
 
         {/* Telemetry Metric Badges */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-white/8">
-          <div className="rounded-2xl border border-white/6 bg-white/3 p-3.5">
-            <p className="text-[11px] text-zinc-400 font-medium">Department Courses</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-[#E2E6ED]">
+          <div className="rounded-2xl border border-[#E2E6ED] bg-[#F5F6F8] p-3.5">
+            <p className="text-[11px] text-[#666666] font-medium">Department Courses</p>
             <div className="flex items-baseline gap-2 mt-1">
-              <p className="text-2xl font-black text-white">{totalCourses}</p>
-              <span className="text-[10px] text-emerald-400 font-medium">100% Assigned</span>
+              <p className="text-2xl font-black text-[#1F1F1F]">{totalCourses}</p>
+              <span className="text-[10px] text-emerald-700 font-medium">100% Assigned</span>
             </div>
           </div>
-          <div className="rounded-2xl border border-white/6 bg-white/3 p-3.5">
-            <p className="text-[11px] text-zinc-400 font-medium">Faculty Strength</p>
+          <div className="rounded-2xl border border-[#B8CCF0] bg-[#DCE7F8]/40 p-3.5">
+            <p className="text-[11px] text-[#2563EB] font-medium">Faculty Strength</p>
             <div className="flex items-baseline gap-2 mt-1">
-              <p className="text-2xl font-black text-cyan-300">{totalFaculties}</p>
-              <span className="text-[10px] text-zinc-500 font-medium">Active Teachers</span>
+              <p className="text-2xl font-black text-[#2563EB]">{totalFaculties}</p>
+              <span className="text-[10px] text-[#666666] font-medium">Active Teachers</span>
             </div>
           </div>
-          <div className="rounded-2xl border border-white/6 bg-white/3 p-3.5">
-            <p className="text-[11px] text-zinc-400 font-medium">Dept. Attendance Avg</p>
+          <div className="rounded-2xl border border-[#E2E6ED] bg-[#F5F6F8] p-3.5">
+            <p className="text-[11px] text-[#666666] font-medium">Dept. Attendance Avg</p>
             <div className="flex items-baseline gap-2 mt-1">
-              <p className="text-2xl font-black text-emerald-400">{avgDepartmentAttendance}%</p>
-              <span className="text-[10px] text-zinc-500 font-medium">Threshold: 75%</span>
+              <p className="text-2xl font-black text-emerald-700">{avgDepartmentAttendance}%</p>
+              <span className="text-[10px] text-[#666666] font-medium">Threshold: 75%</span>
             </div>
           </div>
-          <div className="rounded-2xl border border-white/6 bg-white/3 p-3.5">
-            <p className="text-[11px] text-zinc-400 font-medium">Attendance Shortfall</p>
+          <div className="rounded-2xl border border-red-200 bg-red-50 p-3.5">
+            <p className="text-[11px] text-red-700 font-medium">Attendance Shortfall</p>
             <div className="flex items-baseline gap-2 mt-1">
-              <p className={cn('text-2xl font-black', atRiskStudents.length > 0 ? 'text-rose-400' : 'text-zinc-200')}>
+              <p className={cn('text-2xl font-black', atRiskStudents.length > 0 ? 'text-red-700' : 'text-[#1F1F1F]')}>
                 {atRiskStudents.length}
               </p>
-              <span className="text-[10px] text-rose-400/80 font-medium">Students &lt;75%</span>
+              <span className="text-[10px] text-red-600 font-medium">Students &lt;75%</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-white/8 pb-3 overflow-x-auto">
+      <div className="flex items-center gap-2 border-b border-[#E2E6ED] pb-3 overflow-x-auto">
         <button
           onClick={() => setActiveTab('allocation')}
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap',
             activeTab === 'allocation'
-              ? 'bg-cyan-500 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.5)]'
-              : 'text-zinc-400 hover:text-white hover:bg-white/5'
+              ? 'bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/20'
+              : 'text-[#666666] hover:text-[#1F1F1F] hover:bg-[#F5F6F8]'
           )}
         >
           <ArrowRightLeft size={15} />
@@ -245,8 +245,8 @@ export function HODDashboard({
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap',
             activeTab === 'workload'
-              ? 'bg-cyan-500 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.5)]'
-              : 'text-zinc-400 hover:text-white hover:bg-white/5'
+              ? 'bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/20'
+              : 'text-[#666666] hover:text-[#1F1F1F] hover:bg-[#F5F6F8]'
           )}
         >
           <Clock size={15} />
@@ -257,14 +257,14 @@ export function HODDashboard({
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap',
             activeTab === 'attendance'
-              ? 'bg-cyan-500 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.5)]'
-              : 'text-zinc-400 hover:text-white hover:bg-white/5'
+              ? 'bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/20'
+              : 'text-[#666666] hover:text-[#1F1F1F] hover:bg-[#F5F6F8]'
           )}
         >
           <AlertTriangle size={15} />
           Department Attendance Oversight
           {atRiskStudents.length > 0 && (
-            <span className="ml-1 px-1.5 py-0.2 rounded-full bg-rose-500 text-[10px] text-white font-black">
+            <span className="ml-1 px-1.5 py-0.2 rounded-full bg-rose-600 text-[10px] text-white font-black">
               {atRiskStudents.length}
             </span>
           )}
@@ -274,8 +274,8 @@ export function HODDashboard({
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap',
             activeTab === 'obe'
-              ? 'bg-cyan-500 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.5)]'
-              : 'text-zinc-400 hover:text-white hover:bg-white/5'
+              ? 'bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/20'
+              : 'text-[#666666] hover:text-[#1F1F1F] hover:bg-[#F5F6F8]'
           )}
         >
           <BarChart3 size={15} />
@@ -286,14 +286,14 @@ export function HODDashboard({
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap',
             activeTab === 'substitutions'
-              ? 'bg-cyan-500 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.5)]'
-              : 'text-zinc-400 hover:text-white hover:bg-white/5'
+              ? 'bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/20'
+              : 'text-[#666666] hover:text-[#1F1F1F] hover:bg-[#F5F6F8]'
           )}
         >
           <UserCheck size={15} />
           Smart Peer Faculty Substitution
           {substitutions.filter((s) => s.status === 'pending').length > 0 && (
-            <span className="ml-1 px-1.5 py-0.2 rounded-full bg-cyan-400 text-[10px] text-slate-950 font-black">
+            <span className="ml-1 px-1.5 py-0.2 rounded-full bg-[#DCE7F8] text-[10px] text-[#2563EB] font-black">
               {substitutions.filter((s) => s.status === 'pending').length}
             </span>
           )}
@@ -303,8 +303,8 @@ export function HODDashboard({
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap',
             activeTab === 'audit'
-              ? 'bg-cyan-500 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.5)]'
-              : 'text-zinc-400 hover:text-white hover:bg-white/5'
+              ? 'bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/20'
+              : 'text-[#666666] hover:text-[#1F1F1F] hover:bg-[#F5F6F8]'
           )}
         >
           <ShieldAlert size={15} />

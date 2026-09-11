@@ -2,15 +2,15 @@ import type { HTMLAttributes } from 'react'
 import { cn } from '../../lib/utils'
 
 const tones: Record<string, string> = {
-  cyan: 'bg-cyan-500/15 text-cyan-300 ring-1 ring-cyan-400/30 shadow-[0_0_12px_rgba(6,182,212,0.15)]',
-  blue: 'bg-blue-500/15 text-blue-300 ring-1 ring-blue-400/30',
-  indigo: 'bg-cyan-500/15 text-cyan-300 ring-1 ring-cyan-400/30',
-  violet: 'bg-purple-500/15 text-purple-300 ring-1 ring-purple-400/30',
-  gold: 'bg-amber-500/15 text-amber-300 ring-1 ring-amber-400/30',
-  amber: 'bg-amber-500/15 text-amber-300 ring-1 ring-amber-400/30',
-  crimson: 'bg-rose-500/15 text-rose-300 ring-1 ring-rose-400/30 shadow-[0_0_12px_rgba(244,63,94,0.15)]',
-  emerald: 'bg-emerald-500/15 text-emerald-300 ring-1 ring-emerald-400/30 shadow-[0_0_12px_rgba(16,185,129,0.15)]',
-  zinc: 'bg-white/6 text-zinc-300 ring-1 ring-white/10',
+  cyan: 'bg-[#DCE7F8] text-[#2563EB] border border-[#B8CCF0]',
+  blue: 'bg-[#DCE7F8] text-[#2563EB] border border-[#B8CCF0]',
+  indigo: 'bg-[#DCE7F8] text-[#2563EB] border border-[#B8CCF0]',
+  violet: 'bg-[#DCE7F8] text-[#2563EB] border border-[#B8CCF0]',
+  gold: 'bg-amber-50 text-amber-700 border border-amber-200',
+  amber: 'bg-amber-50 text-amber-700 border border-amber-200',
+  crimson: 'bg-rose-50 text-rose-700 border border-rose-200',
+  emerald: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+  zinc: 'bg-[#F5F6F8] text-[#1F1F1F] border border-[#E2E6ED]',
 }
 
 export function Badge({

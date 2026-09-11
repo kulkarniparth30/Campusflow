@@ -26,7 +26,7 @@ export function SkeletonCard({ className }: { className?: string }) {
 
 export function SkeletonMetric({ className }: { className?: string }) {
   return (
-    <div className={cn('rounded-2xl border border-white/6 bg-white/3 p-4 space-y-3', className)}>
+    <div className={cn('rounded-2xl border border-[#E2E6ED] bg-[#F5F6F8] p-4 space-y-3', className)}>
       <div className="flex items-center justify-between">
         <Skeleton className="h-3 w-24" />
         <Skeleton className="h-4 w-4 rounded-full" />

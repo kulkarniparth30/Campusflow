@@ -156,14 +156,14 @@ export function AttendanceMonitor({
         </div>
 
         {/* Mode Selector */}
-        <div className="flex items-center rounded-xl border border-white/10 bg-black/40 p-0.5 text-xs shrink-0">
+        <div className="flex items-center rounded-xl border border-[#E2E6ED] bg-[#F5F6F8] p-0.5 text-xs shrink-0">
           <button
             type="button"
             onClick={() => setMode('miss')}
             className={`rounded-lg px-2.5 py-1 transition-all cursor-pointer ${
               mode === 'miss'
-                ? 'bg-red-500/20 font-medium text-red-300'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-rose-50 font-semibold text-rose-700 border border-rose-200'
+                : 'text-[#666666] hover:text-[#1F1F1F]'
             }`}
           >
             Miss Classes
@@ -173,8 +173,8 @@ export function AttendanceMonitor({
             onClick={() => setMode('attend')}
             className={`rounded-lg px-2.5 py-1 transition-all cursor-pointer ${
               mode === 'attend'
-                ? 'bg-cyan-500/20 font-medium text-cyan-300'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-[#DCE7F8] font-semibold text-[#2563EB] border border-[#B8CCF0]'
+                : 'text-[#666666] hover:text-[#1F1F1F]'
             }`}
           >
             Attend Next
@@ -183,21 +183,21 @@ export function AttendanceMonitor({
       </CardHeader>
 
       <div className="mb-4 grid grid-cols-3 gap-2">
-        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-2 text-center">
-          <div className="text-[10px] text-emerald-400 uppercase font-semibold tracking-wider mb-0.5">Present</div>
-          <div className="text-emerald-400 font-semibold font-mono text-lg">
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-2 text-center">
+          <div className="text-[10px] text-emerald-700 uppercase font-semibold tracking-wider mb-0.5">Present</div>
+          <div className="text-emerald-700 font-bold font-mono text-lg">
             <AnimatedCounter value={overallStats.present} />
           </div>
         </div>
-        <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-2 text-center">
-          <div className="text-[10px] text-red-400 uppercase font-semibold tracking-wider mb-0.5">Absent</div>
-          <div className="text-red-400 font-semibold font-mono text-lg">
+        <div className="rounded-xl border border-rose-200 bg-rose-50 p-2 text-center">
+          <div className="text-[10px] text-rose-700 uppercase font-semibold tracking-wider mb-0.5">Absent</div>
+          <div className="text-rose-700 font-bold font-mono text-lg">
             <AnimatedCounter value={overallStats.absent} />
           </div>
         </div>
-        <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-2 text-center">
-          <div className="text-[10px] text-amber-400 uppercase font-semibold tracking-wider mb-0.5">Late</div>
-          <div className="text-amber-400 font-semibold font-mono text-lg">
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-2 text-center">
+          <div className="text-[10px] text-amber-700 uppercase font-semibold tracking-wider mb-0.5">Late</div>
+          <div className="text-amber-700 font-bold font-mono text-lg">
             <AnimatedCounter value={overallStats.late} />
           </div>
         </div>
@@ -212,18 +212,18 @@ export function AttendanceMonitor({
           transition={{ duration: 0.2 }}
           className={cn(
             "mb-4 rounded-xl border p-3 transition-colors",
-            mode === 'miss' ? 'border-red-500/20 bg-red-500/5' : 'border-cyan-500/20 bg-cyan-500/5'
+            mode === 'miss' ? 'border-rose-200 bg-rose-50' : 'border-[#B8CCF0] bg-[#DCE7F8]'
           )}
         >
           <div className="flex items-center justify-between text-xs mb-2">
-            <span className="flex items-center gap-1.5 font-medium text-zinc-300">
-              <Calculator size={13} className={mode === 'miss' ? 'text-red-400' : 'text-cyan-400'} />
+            <span className="flex items-center gap-1.5 font-medium text-[#1F1F1F]">
+              <Calculator size={13} className={mode === 'miss' ? 'text-rose-600' : 'text-[#2563EB]'} />
               {mode === 'miss' ? 'Simulate missing' : 'Simulate attending'}:{' '}
-              <strong className={mode === 'miss' ? 'text-red-400' : 'text-cyan-400'}>
+              <strong className={mode === 'miss' ? 'text-rose-600' : 'text-[#2563EB]'}>
                 {sliderValue} class{sliderValue === 1 ? '' : 'es'}
               </strong>
             </span>
-            <span className="text-[11px] text-zinc-500 font-mono">0 to 8 classes</span>
+            <span className="text-[11px] text-[#666666] font-mono">0 to 8 classes</span>
           </div>
           <input
             type="range"
@@ -232,8 +232,8 @@ export function AttendanceMonitor({
             value={sliderValue}
             onChange={(e) => setSliderValue(Number(e.target.value))}
             className={cn(
-              "w-full cursor-pointer h-1.5 rounded-lg appearance-none bg-black/50",
-              mode === 'miss' ? "accent-red-500" : "accent-cyan-400"
+              "w-full cursor-pointer h-1.5 rounded-lg appearance-none bg-[#E2E6ED]",
+              mode === 'miss' ? "accent-rose-600" : "accent-[#2563EB]"
             )}
           />
         </motion.div>
@@ -245,15 +245,15 @@ export function AttendanceMonitor({
           <div
             key={s.id}
             onClick={() => setSelectedSubjectId(s.id)}
-            className={`group relative flex flex-col justify-between rounded-2xl border p-4 transition-all cursor-pointer hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] ${
+            className={`group relative flex flex-col justify-between rounded-2xl border p-4 transition-all cursor-pointer hover:shadow-md ${
               willBeAtRisk
-                ? 'border-red-500/30 bg-red-500/5 hover:border-red-500/50'
-                : 'border-white/10 bg-slate-900/40 hover:border-cyan-500/40'
+                ? 'border-rose-300 bg-rose-50/50 hover:border-rose-400'
+                : 'border-[#E2E6ED] bg-white hover:border-[#B8CCF0]'
             }`}
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <div className={cn(isCurrentlyAtRisk && 'ring-glow', isCurrentlyAtRisk ? 'shadow-red-500/20' : '')}>
+                <div className={cn(isCurrentlyAtRisk && 'ring-glow', isCurrentlyAtRisk ? 'shadow-rose-500/20' : '')}>
                   <RingMeter
                     value={current}
                     label={s.code}
@@ -262,13 +262,13 @@ export function AttendanceMonitor({
                   />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center gap-1">
+                  <h4 className="text-sm font-bold text-[#1F1F1F] group-hover:text-[#2563EB] transition-colors flex items-center gap-1">
                     {s.name}
                   </h4>
-                  <p className="text-xs text-zinc-400 mt-0.5">
-                    Faculty: <span className="text-zinc-300 font-medium">{s.faculty_name || 'Dr. Kavya Iyer'}</span>
+                  <p className="text-xs text-[#666666] mt-0.5">
+                    Faculty: <span className="text-[#1F1F1F] font-medium">{s.faculty_name || 'Dr. Kavya Iyer'}</span>
                   </p>
-                  <p className="text-[11px] text-zinc-500 font-mono mt-0.5">
+                  <p className="text-[11px] text-[#666666] font-mono mt-0.5">
                     {present} / {total} attended ({absentCount} missed{lateCount > 0 ? `, ${lateCount} late` : ''})
                   </p>
                 </div>
@@ -276,31 +276,31 @@ export function AttendanceMonitor({
 
               <div className="flex flex-col items-end gap-2 shrink-0">
                 {willBeAtRisk ? (
-                  <ShieldAlert size={16} className="text-red-400 mt-1" />
+                  <ShieldAlert size={16} className="text-rose-600 mt-1" />
                 ) : (
-                  <ShieldCheck size={16} className="text-emerald-400 mt-1" />
+                  <ShieldCheck size={16} className="text-emerald-600 mt-1" />
                 )}
                 <div title="Last 7 sessions trend">
                   <Sparkline 
                     data={sparkData} 
                     width={40} 
                     height={20} 
-                    color={isCurrentlyAtRisk ? '#f87171' : '#06b6d4'} 
+                    color={isCurrentlyAtRisk ? '#EF4444' : '#2563EB'} 
                     showDot={false}
                   />
                 </div>
               </div>
             </div>
 
-            <div className="mt-3 pt-2 border-t border-white/5">
+            <div className="mt-3 pt-2 border-t border-[#E2E6ED]">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-zinc-400">Simulation forecast:</span>
+                <span className="text-[#666666]">Simulation forecast:</span>
                 <div className="flex items-center gap-1.5 font-mono">
-                  <span className={willBeAtRisk ? 'font-semibold text-red-400' : 'text-cyan-300 font-semibold'}>
+                  <span className={willBeAtRisk ? 'font-semibold text-rose-600' : 'text-[#2563EB] font-semibold'}>
                     <AnimatedCounter value={next} decimals={1} suffix="%" />
                   </span>
                   {sliderValue > 0 && (
-                    <span className={`text-[10px] ${diff < 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+                    <span className={`text-[10px] ${diff < 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
                       ({diff > 0 ? '+' : ''}
                       <AnimatedCounter value={diff} decimals={1} suffix="%" />)
                     </span>
@@ -309,16 +309,16 @@ export function AttendanceMonitor({
               </div>
 
               {insight && insight.risk_level !== 'safe' && (
-                <div className="mt-2 rounded-lg bg-black/30 p-2 text-[10px] flex gap-1.5 items-start">
-                  <Info size={12} className={insight.risk_level === 'danger' ? 'text-red-400 shrink-0' : 'text-amber-400 shrink-0'} />
-                  <span className="text-zinc-300 leading-tight">
+                <div className="mt-2 rounded-lg bg-[#F5F6F8] border border-[#E2E6ED] p-2 text-[10px] flex gap-1.5 items-start">
+                  <Info size={12} className={insight.risk_level === 'danger' ? 'text-rose-600 shrink-0' : 'text-amber-600 shrink-0'} />
+                  <span className="text-[#1F1F1F] leading-tight">
                     {insight.recovery_plan}
                   </span>
                 </div>
               )}
 
-              <div className="mt-2.5 flex items-center justify-between text-xs pt-1.5 border-t border-white/5">
-                <span className="text-[11px] text-cyan-400 font-medium flex items-center gap-1 group-hover:underline">
+              <div className="mt-2.5 flex items-center justify-between text-xs pt-1.5 border-t border-[#E2E6ED]">
+                <span className="text-[11px] text-[#2563EB] font-semibold flex items-center gap-1 group-hover:underline">
                   <CalendarDays size={12} /> View Daily Breakdown &rarr;
                 </span>
                 <div className="flex items-center gap-2">
@@ -328,12 +328,12 @@ export function AttendanceMonitor({
                         e.stopPropagation()
                         setLoanSubjectId(s.id)
                       }}
-                      className="rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-300 flex items-center gap-1 transition-all"
+                      className="rounded-lg bg-amber-50 hover:bg-amber-100 border border-amber-200 px-2 py-0.5 text-[10px] font-bold text-amber-800 flex items-center gap-1 transition-all cursor-pointer"
                     >
                       <FileSignature size={11} /> Recovery Loan
                     </button>
                   )}
-                  <span className="text-[10px] text-zinc-500 font-mono">
+                  <span className="text-[10px] text-[#666666] font-mono">
                     {total} records
                   </span>
                 </div>
@@ -346,40 +346,40 @@ export function AttendanceMonitor({
       {/* Academic Recovery Attendance Loan Modal */}
       <AnimatePresence>
         {loanSubjectId && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="relative w-full max-w-lg rounded-3xl border border-amber-500/40 bg-slate-950 p-6 shadow-2xl shadow-amber-950/30"
+              className="relative w-full max-w-lg rounded-3xl border border-[#E2E6ED] bg-white p-6 shadow-2xl text-[#1F1F1F]"
             >
-              <div className="flex items-start justify-between pb-4 border-b border-amber-500/20">
+              <div className="flex items-start justify-between pb-4 border-b border-[#E2E6ED]">
                 <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-xl bg-amber-500/20 border border-amber-500/30 text-amber-400">
+                  <div className="p-2 rounded-xl bg-amber-50 border border-amber-200 text-amber-700">
                     <FileSignature size={18} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-white text-base">Academic Attendance Recovery Contract</h3>
-                    <p className="text-xs text-amber-300/80">Remediate debarment risk via compensatory faculty tasks</p>
+                    <h3 className="font-bold text-[#1F1F1F] text-base">Academic Attendance Recovery Contract</h3>
+                    <p className="text-xs text-[#666666]">Remediate debarment risk via compensatory faculty tasks</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setLoanSubjectId(null)}
-                  className="p-1 rounded-lg text-zinc-400 hover:text-white"
+                  className="p-1 rounded-lg text-[#666666] hover:text-[#1F1F1F]"
                 >
                   <X size={16} />
                 </button>
               </div>
 
               <div className="py-4 space-y-4 text-xs">
-                <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3 text-amber-200">
+                <div className="rounded-xl bg-amber-50 border border-amber-200 p-3 text-amber-800">
                   <p className="font-medium">
                     Debarment Protection: Students below 75% can apply for an HOD-authorized Remediation Contract to unlock Exam Hall Tickets.
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-zinc-300 font-medium mb-1">Committed Remedial / Tutorial Hours:</label>
+                  <label className="block text-[#1F1F1F] font-medium mb-1">Committed Remedial / Tutorial Hours:</label>
                   <div className="flex items-center gap-3">
                     <input
                       type="range"
@@ -388,19 +388,19 @@ export function AttendanceMonitor({
                       step={2}
                       value={remedialHours}
                       onChange={(e) => setRemedialHours(Number(e.target.value))}
-                      className="flex-1 accent-amber-400 bg-black/50"
+                      className="flex-1 accent-[#2563EB] bg-[#E2E6ED]"
                     />
-                    <span className="font-mono text-amber-300 font-bold text-sm min-w-12 text-right">
+                    <span className="font-mono text-[#2563EB] font-bold text-sm min-w-12 text-right">
                       {remedialHours} hrs
                     </span>
                   </div>
-                  <p className="text-[10px] text-zinc-500 mt-1">
+                  <p className="text-[10px] text-[#666666] mt-1">
                     Projects +{(remedialHours * 1.5).toFixed(1)}% attendance credit upon HOD review.
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-zinc-300 font-medium mb-1">
+                  <label className="block text-[#1F1F1F] font-medium mb-1">
                     Proposed Compensatory Remedial Plan:
                   </label>
                   <textarea
@@ -408,24 +408,24 @@ export function AttendanceMonitor({
                     value={compensatoryTask}
                     onChange={(e) => setCompensatoryTask(e.target.value)}
                     placeholder="e.g. Complete 3 additional lab assignments, author indexing research summary, and attend 4 remedial Saturday clinic hours..."
-                    className="w-full rounded-xl border border-white/10 bg-slate-900/90 p-3 text-white placeholder:text-zinc-600 focus:border-amber-400 focus:outline-none"
+                    className="w-full rounded-xl border border-[#E2E6ED] bg-[#F5F6F8] p-3 text-[#1F1F1F] placeholder:text-[#999999] focus:border-[#2563EB] focus:outline-none"
                   />
                 </div>
 
                 {/* Existing active loans notice */}
                 {attendanceLoans.some((l) => l.subject_id === loanSubjectId) && (
-                  <div className="rounded-xl border border-cyan-500/20 bg-cyan-950/20 p-3">
-                    <span className="text-[11px] text-cyan-300 font-semibold flex items-center gap-1">
+                  <div className="rounded-xl border border-[#B8CCF0] bg-[#DCE7F8] p-3">
+                    <span className="text-[11px] text-[#2563EB] font-semibold flex items-center gap-1">
                       <Sparkles size={12} /> Active Contract on File for this Subject
                     </span>
-                    <p className="text-[10px] text-zinc-400 mt-1">
+                    <p className="text-[10px] text-[#666666] mt-1">
                       HOD Status: {attendanceLoans.find((l) => l.subject_id === loanSubjectId)?.status.toUpperCase()}
                     </p>
                   </div>
                 )}
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-white/10">
+              <div className="flex justify-end gap-2 pt-3 border-t border-[#E2E6ED]">
                 <Button variant="ghost" size="sm" onClick={() => setLoanSubjectId(null)}>
                   Cancel
                 </Button>
@@ -440,7 +440,7 @@ export function AttendanceMonitor({
                       setCompensatoryTask('')
                     }
                   }}
-                  className="bg-amber-500 text-slate-950 hover:bg-amber-400 font-bold"
+                  className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold"
                 >
                   Sign & Submit Recovery Contract
                 </Button>
@@ -453,24 +453,24 @@ export function AttendanceMonitor({
       {/* Detailed Session Breakdown Modal */}
       <AnimatePresence>
         {selectedSubjectId && activeSubject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-2xl max-h-[90vh] flex flex-col rounded-3xl border border-cyan-500/30 bg-slate-950 p-6 shadow-[0_0_50px_rgba(6,182,212,0.2)]"
+              className="relative w-full max-w-2xl max-h-[90vh] flex flex-col rounded-3xl border border-[#E2E6ED] bg-white p-6 shadow-2xl text-[#1F1F1F]"
             >
               {/* Modal Header */}
-              <div className="flex items-start justify-between pb-4 border-b border-white/10">
+              <div className="flex items-start justify-between pb-4 border-b border-[#E2E6ED]">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#DCE7F8] text-[#2563EB] border border-[#B8CCF0]">
                       {activeSubject.code}
                     </span>
-                    <h3 className="text-lg font-bold text-white">{activeSubject.name}</h3>
+                    <h3 className="text-lg font-bold text-[#1F1F1F]">{activeSubject.name}</h3>
                   </div>
-                  <p className="text-xs text-zinc-400 mt-1">
-                    Faculty Instructor: <strong className="text-zinc-200">{activeSubject.faculty_name || 'Dr. Kavya Iyer'}</strong> · Target: <span className="font-mono text-cyan-400">{activeSubject.min_attendance_pct}%</span>
+                  <p className="text-xs text-[#666666] mt-1">
+                    Faculty Instructor: <strong className="text-[#1F1F1F]">{activeSubject.faculty_name || 'Dr. Kavya Iyer'}</strong> · Target: <span className="font-mono text-[#2563EB] font-bold">{activeSubject.min_attendance_pct}%</span>
                   </p>
                 </div>
                 <button
@@ -478,7 +478,7 @@ export function AttendanceMonitor({
                     setSelectedSubjectId(null)
                     setDisputeRecord(null)
                   }}
-                  className="p-1.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+                  className="p-1.5 rounded-xl text-[#666666] hover:text-[#1F1F1F] hover:bg-[#F5F6F8] transition-colors"
                 >
                   <X size={18} />
                 </button>
@@ -486,12 +486,12 @@ export function AttendanceMonitor({
 
               {/* Filter Tabs */}
               <div className="flex items-center justify-between my-3">
-                <div className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-black/40 p-1 text-xs">
+                <div className="flex items-center gap-1.5 rounded-xl border border-[#E2E6ED] bg-[#F5F6F8] p-1 text-xs">
                   <button
                     onClick={() => setSessionFilter('all')}
                     className={cn(
                       "px-3 py-1 rounded-lg transition-all font-medium cursor-pointer",
-                      sessionFilter === 'all' ? "bg-cyan-500 text-slate-950 font-bold" : "text-zinc-400 hover:text-white"
+                      sessionFilter === 'all' ? "bg-[#2563EB] text-white font-bold" : "text-[#666666] hover:text-[#1F1F1F]"
                     )}
                   >
                     All ({activeSubjectRecords.length})
@@ -500,7 +500,7 @@ export function AttendanceMonitor({
                     onClick={() => setSessionFilter('present')}
                     className={cn(
                       "px-3 py-1 rounded-lg transition-all font-medium cursor-pointer flex items-center gap-1",
-                      sessionFilter === 'present' ? "bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30" : "text-zinc-400 hover:text-emerald-300"
+                      sessionFilter === 'present' ? "bg-emerald-50 text-emerald-700 font-bold border border-emerald-200" : "text-[#666666] hover:text-emerald-700"
                     )}
                   >
                     <CheckCircle2 size={12} /> Present ({activeSubjectRecords.filter(r => r.status === 'present').length})
@@ -509,7 +509,7 @@ export function AttendanceMonitor({
                     onClick={() => setSessionFilter('absent')}
                     className={cn(
                       "px-3 py-1 rounded-lg transition-all font-medium cursor-pointer flex items-center gap-1",
-                      sessionFilter === 'absent' ? "bg-red-500/20 text-red-300 font-bold border border-red-500/30" : "text-zinc-400 hover:text-red-300"
+                      sessionFilter === 'absent' ? "bg-rose-50 text-rose-700 font-bold border border-rose-200" : "text-[#666666] hover:text-rose-700"
                     )}
                   >
                     <XCircle size={12} /> Absent ({activeSubjectRecords.filter(r => r.status === 'absent').length})
@@ -518,7 +518,7 @@ export function AttendanceMonitor({
                     onClick={() => setSessionFilter('late')}
                     className={cn(
                       "px-3 py-1 rounded-lg transition-all font-medium cursor-pointer flex items-center gap-1",
-                      sessionFilter === 'late' ? "bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30" : "text-zinc-400 hover:text-amber-300"
+                      sessionFilter === 'late' ? "bg-amber-50 text-amber-700 font-bold border border-amber-200" : "text-[#666666] hover:text-amber-700"
                     )}
                   >
                     <Clock size={12} /> Late ({activeSubjectRecords.filter(r => r.status === 'late').length})
@@ -532,7 +532,7 @@ export function AttendanceMonitor({
                     setSelectedSubjectId(null)
                     setView('corrections')
                   }}
-                  className="text-xs text-cyan-300 hover:text-white"
+                  className="text-xs text-[#2563EB] border-[#E2E6ED] bg-white hover:bg-[#F5F6F8]"
                 >
                   Go to Corrections <ArrowUpRight size={12} className="ml-1" />
                 </Button>
@@ -541,7 +541,7 @@ export function AttendanceMonitor({
               {/* Sessions List */}
               <div className="flex-1 overflow-y-auto space-y-2 pr-1 my-2">
                 {filteredSubjectRecords.length === 0 ? (
-                  <div className="text-center py-8 text-zinc-500 text-xs">
+                  <div className="text-center py-8 text-[#666666] text-xs">
                     No sessions match the selected filter.
                   </div>
                 ) : (
@@ -558,21 +558,21 @@ export function AttendanceMonitor({
                         className={cn(
                           "flex items-center justify-between p-3 rounded-xl border transition-all",
                           record.status === 'present'
-                            ? "border-emerald-500/20 bg-emerald-500/5"
+                            ? "border-emerald-200 bg-emerald-50"
                             : record.status === 'absent'
-                            ? "border-red-500/20 bg-red-500/5"
-                            : "border-amber-500/20 bg-amber-500/5"
+                            ? "border-rose-200 bg-rose-50"
+                            : "border-amber-200 bg-amber-50"
                         )}
                       >
                         <div className="flex items-center gap-3">
                           <div
                             className={cn(
-                              "p-2 rounded-xl text-white shrink-0",
+                              "p-2 rounded-xl shrink-0",
                               record.status === 'present'
-                                ? "bg-emerald-500/20 text-emerald-300"
+                                ? "bg-emerald-100 text-emerald-700"
                                 : record.status === 'absent'
-                                ? "bg-red-500/20 text-red-300"
-                                : "bg-amber-500/20 text-amber-300"
+                                ? "bg-rose-100 text-rose-700"
+                                : "bg-amber-100 text-amber-700"
                             )}
                           >
                             {record.status === 'present' && <CheckCircle2 size={16} />}
@@ -580,9 +580,9 @@ export function AttendanceMonitor({
                             {record.status === 'late' && <Clock size={16} />}
                           </div>
                           <div>
-                            <p className="text-sm font-semibold text-white">{formattedDate}</p>
-                            <p className="text-[11px] text-zinc-400">
-                              Marked by instructor · Session ID: <span className="font-mono text-zinc-500">{record.id}</span>
+                            <p className="text-sm font-semibold text-[#1F1F1F]">{formattedDate}</p>
+                            <p className="text-[11px] text-[#666666]">
+                              Marked by instructor · Session ID: <span className="font-mono text-[#1F1F1F]">{record.id}</span>
                             </p>
                           </div>
                         </div>
@@ -592,10 +592,10 @@ export function AttendanceMonitor({
                             className={cn(
                               "px-2.5 py-0.5 rounded-full text-xs font-bold uppercase",
                               record.status === 'present'
-                                ? "bg-emerald-500/20 text-emerald-300"
+                                ? "bg-emerald-100 text-emerald-800"
                                 : record.status === 'absent'
-                                ? "bg-red-500/20 text-red-300"
-                                : "bg-amber-500/20 text-amber-300"
+                                ? "bg-rose-100 text-rose-800"
+                                : "bg-amber-100 text-amber-800"
                             )}
                           >
                             {record.status}
@@ -603,7 +603,7 @@ export function AttendanceMonitor({
 
                           {record.status !== 'present' && (
                             hasPendingCorrection ? (
-                              <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-500/10 text-amber-300 border border-amber-500/20 flex items-center gap-1">
+                              <span className="px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1">
                                 <AlertCircle size={12} /> Dispute Under Review
                               </span>
                             ) : (
@@ -612,7 +612,7 @@ export function AttendanceMonitor({
                                   setDisputeRecord(record)
                                   setDisputeReason('')
                                 }}
-                                className="px-2.5 py-1 rounded-lg text-xs font-bold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/30 transition-all cursor-pointer flex items-center gap-1"
+                                className="px-2.5 py-1 rounded-lg text-xs font-bold bg-[#DCE7F8] hover:bg-[#B8CCF0] text-[#2563EB] border border-[#B8CCF0] transition-all cursor-pointer flex items-center gap-1"
                               >
                                 <AlertCircle size={12} /> Dispute
                               </button>
@@ -632,26 +632,26 @@ export function AttendanceMonitor({
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="mt-3 pt-3 border-t border-white/10"
+                    className="mt-3 pt-3 border-t border-[#E2E6ED]"
                   >
-                    <form onSubmit={handleDisputeSubmit} className="rounded-2xl bg-cyan-950/40 border border-cyan-500/30 p-4 space-y-3">
+                    <form onSubmit={handleDisputeSubmit} className="rounded-2xl bg-[#DCE7F8] border border-[#B8CCF0] p-4 space-y-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <AlertCircle size={16} className="text-cyan-400" />
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-300">
+                          <AlertCircle size={16} className="text-[#2563EB]" />
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#2563EB]">
                             Dispute Session on {format(parseISO(disputeRecord.session_date), 'dd MMM yyyy')}
                           </h4>
                         </div>
                         <button
                           type="button"
                           onClick={() => setDisputeRecord(null)}
-                          className="text-xs text-zinc-400 hover:text-white"
+                          className="text-xs text-[#666666] hover:text-[#1F1F1F]"
                         >
                           Cancel
                         </button>
                       </div>
 
-                      <p className="text-xs text-zinc-300">
+                      <p className="text-xs text-[#1F1F1F]">
                         Explain why this absence should be corrected (e.g., attended late, verified OD, or signed physical register).
                       </p>
 
@@ -660,7 +660,7 @@ export function AttendanceMonitor({
                         value={disputeReason}
                         onChange={(e) => setDisputeReason(e.target.value)}
                         placeholder="State your reason clearly for faculty review..."
-                        className="w-full rounded-xl border border-white/10 bg-black/50 p-2.5 text-xs text-white placeholder:text-zinc-500 focus:border-cyan-400 focus:outline-none"
+                        className="w-full rounded-xl border border-[#E2E6ED] bg-white p-2.5 text-xs text-[#1F1F1F] placeholder:text-[#999999] focus:border-[#2563EB] focus:outline-none"
                       />
 
                       <div className="flex justify-end gap-2">
@@ -675,7 +675,7 @@ export function AttendanceMonitor({
                         <Button
                           type="submit"
                           size="sm"
-                          className="bg-cyan-500 text-slate-950 hover:bg-cyan-400 font-bold"
+                          className="bg-[#2563EB] text-white hover:bg-[#1D4ED8] font-bold"
                         >
                           <Send size={12} className="mr-1" /> Submit Correction Request
                         </Button>

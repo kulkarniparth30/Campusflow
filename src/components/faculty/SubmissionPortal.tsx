@@ -130,22 +130,22 @@ export function SubmissionPortal({
     <div className="space-y-6">
       {/* Faculty Summary Banner */}
       {role === 'faculty' && (
-        <div className="glass glow-border rounded-3xl p-6 flex items-center justify-between">
+        <div className="glass glow-border rounded-3xl p-6 flex items-center justify-between bg-white border border-[#E2E6ED]">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-cyan-500/20 text-cyan-400 rounded-2xl border border-cyan-500/30">
+            <div className="p-3 bg-[#DCE7F8] text-[#2563EB] rounded-2xl border border-[#B8CCF0]">
               <PieChart size={24} />
             </div>
             <div>
-              <p className="text-xs text-zinc-400 font-semibold uppercase tracking-wider">Total Submissions Received</p>
-              <p className="text-2xl font-bold text-white">
+              <p className="text-xs text-[#666666] font-semibold uppercase tracking-wider">Total Submissions Received</p>
+              <p className="text-2xl font-bold text-[#1F1F1F]">
                 <AnimatedCounter value={submissions.length} />
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-4 border-l border-white/10 pl-6">
+          <div className="flex items-center gap-4 border-l border-[#E2E6ED] pl-6">
             <div>
-              <p className="text-xs text-zinc-400 font-semibold uppercase tracking-wider">Awaiting Evaluation</p>
-              <p className="text-2xl font-bold text-amber-400">
+              <p className="text-xs text-[#666666] font-semibold uppercase tracking-wider">Awaiting Evaluation</p>
+              <p className="text-2xl font-bold text-amber-700">
                 <AnimatedCounter value={submissions.filter((s) => s.grade === null).length} />
               </p>
             </div>
@@ -157,12 +157,12 @@ export function SubmissionPortal({
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <BookOpen size={16} className="text-cyan-400" />
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+            <BookOpen size={16} className="text-[#2563EB]" />
+            <h3 className="text-sm font-bold text-[#1F1F1F] uppercase tracking-wider">
               Select Subject / Course
             </h3>
           </div>
-          <span className="text-xs text-zinc-400 font-mono">
+          <span className="text-xs text-[#666666] font-mono">
             {filteredAssignments.length} Assignment{filteredAssignments.length === 1 ? '' : 's'} Visible
           </span>
         </div>
@@ -174,16 +174,16 @@ export function SubmissionPortal({
             className={cn(
               "p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between",
               selectedSubjectId === 'all'
-                ? "border-cyan-500 bg-cyan-500/15 shadow-[0_0_20px_rgba(6,182,212,0.25)]"
-                : "border-white/10 bg-slate-900/40 hover:border-cyan-500/30 hover:bg-white/5"
+                ? "border-[#2563EB] bg-[#DCE7F8] shadow-sm"
+                : "border-[#E2E6ED] bg-white hover:border-[#B8CCF0] hover:bg-[#F5F6F8]"
             )}
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-bold text-cyan-300 font-mono">ALL</span>
+              <span className="text-xs font-bold text-[#2563EB] font-mono">ALL</span>
               <Badge tone="cyan" className="text-[10px]">{stats.total}</Badge>
             </div>
-            <p className="text-xs font-bold text-white">All Courses</p>
-            <p className="text-[10px] text-zinc-400 mt-1">Full curriculum view</p>
+            <p className="text-xs font-bold text-[#1F1F1F]">All Courses</p>
+            <p className="text-[10px] text-[#666666] mt-1">Full curriculum view</p>
           </button>
 
           {/* Enrolled Subjects */}
@@ -201,20 +201,20 @@ export function SubmissionPortal({
                 className={cn(
                   "p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between group",
                   isSelected
-                    ? "border-cyan-500 bg-cyan-500/15 shadow-[0_0_20px_rgba(6,182,212,0.25)]"
-                    : "border-white/10 bg-slate-900/40 hover:border-cyan-500/30 hover:bg-white/5"
+                    ? "border-[#2563EB] bg-[#DCE7F8] shadow-sm"
+                    : "border-[#E2E6ED] bg-white hover:border-[#B8CCF0] hover:bg-[#F5F6F8]"
                 )}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-cyan-400 font-mono">{sub.code}</span>
-                  <span className="text-[10px] font-mono text-zinc-400">
+                  <span className="text-xs font-bold text-[#2563EB] font-mono">{sub.code}</span>
+                  <span className="text-[10px] font-mono text-[#666666]">
                     {submittedForSub}/{subjectAssignments.length} done
                   </span>
                 </div>
-                <p className="text-xs font-bold text-white group-hover:text-cyan-300 transition-colors truncate" title={sub.name}>
+                <p className="text-xs font-bold text-[#1F1F1F] group-hover:text-[#2563EB] transition-colors truncate" title={sub.name}>
                   {sub.name}
                 </p>
-                <p className="text-[10px] text-zinc-400 mt-1 truncate" title={sub.faculty_name || 'Dr. Kavya Iyer'}>
+                <p className="text-[10px] text-[#666666] mt-1 truncate" title={sub.faculty_name || 'Dr. Kavya Iyer'}>
                   {sub.faculty_name || 'Dr. Kavya Iyer'}
                 </p>
               </button>
@@ -241,52 +241,52 @@ export function SubmissionPortal({
               key={a.id}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              className="glass rounded-3xl p-6 border border-white/10 flex flex-col justify-between space-y-5 hover:border-cyan-500/30 transition-all shadow-lg"
+              className="glass rounded-3xl p-6 border border-[#E2E6ED] bg-white flex flex-col justify-between space-y-5 hover:border-[#B8CCF0] transition-all shadow-md"
             >
               {/* Header */}
               <div>
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-[#DCE7F8] text-[#2563EB] border border-[#B8CCF0]">
                       {subject?.code || 'CS'}
                     </span>
                     <span
                       className={cn(
                         "text-[10px] px-2 py-0.5 rounded-full uppercase font-bold",
                         a.kind === 'exam'
-                          ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                          : "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                          ? "bg-amber-50 text-amber-800 border border-amber-200"
+                          : "bg-[#DCE7F8] text-[#2563EB] border border-[#B8CCF0]"
                       )}
                     >
                       {a.kind}
                     </span>
                     {a.urgency >= 4 && (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full uppercase font-bold bg-red-500/20 text-red-300 border border-red-500/30">
+                      <span className="text-[10px] px-2 py-0.5 rounded-full uppercase font-bold bg-rose-50 text-rose-800 border border-rose-200">
                         Priority {a.urgency}/5
                       </span>
                     )}
                   </div>
 
-                  <span className="text-xs text-zinc-400 flex items-center gap-1 shrink-0 font-mono">
-                    <Clock size={12} className="text-cyan-400" /> Due: {formattedDue}
+                  <span className="text-xs text-[#666666] flex items-center gap-1 shrink-0 font-mono">
+                    <Clock size={12} className="text-[#2563EB]" /> Due: {formattedDue}
                   </span>
                 </div>
 
-                <h4 className="text-lg font-bold text-white mt-1">{a.title}</h4>
-                <p className="text-xs text-zinc-300 mt-1">{a.description}</p>
+                <h4 className="text-lg font-bold text-[#1F1F1F] mt-1">{a.title}</h4>
+                <p className="text-xs text-[#666666] mt-1">{a.description}</p>
 
-                <div className="flex items-center gap-3 text-xs text-zinc-400 mt-2">
-                  <span className="flex items-center gap-1 text-zinc-300">
-                    <User size={12} className="text-cyan-400" />
-                    Instructor: <strong className="text-white">{subject?.faculty_name || 'Dr. Kavya Iyer'}</strong>
+                <div className="flex items-center gap-3 text-xs text-[#666666] mt-2">
+                  <span className="flex items-center gap-1 text-[#1F1F1F]">
+                    <User size={12} className="text-[#2563EB]" />
+                    Instructor: <strong className="text-[#1F1F1F]">{subject?.faculty_name || 'Dr. Kavya Iyer'}</strong>
                   </span>
                 </div>
               </div>
 
               {/* Faculty Problem Statement & Question Brief */}
-              <div className="rounded-2xl border border-cyan-500/20 bg-cyan-950/20 p-4 space-y-3">
+              <div className="rounded-2xl border border-[#B8CCF0] bg-[#DCE7F8]/40 p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-cyan-300 flex items-center gap-1.5">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#2563EB] flex items-center gap-1.5">
                     <FileText size={13} /> Official Assignment Questions
                   </span>
 
@@ -295,7 +295,7 @@ export function SubmissionPortal({
                       href={a.question_pdf_url}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-bold text-cyan-400 hover:text-cyan-300 underline underline-offset-2"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-[#2563EB] hover:underline underline-offset-2"
                     >
                       <Download size={12} /> Download PDF Brief
                     </a>
@@ -307,15 +307,15 @@ export function SubmissionPortal({
                     {a.questions.map((q, qIdx) => (
                       <div
                         key={qIdx}
-                        className="text-xs text-zinc-200 bg-black/40 p-2 rounded-xl border border-white/5 flex items-start gap-2"
+                        className="text-xs text-[#1F1F1F] bg-white p-2.5 rounded-xl border border-[#E2E6ED] flex items-start gap-2 shadow-xs"
                       >
-                        <span className="text-cyan-400 font-bold shrink-0">Q{qIdx + 1}.</span>
+                        <span className="text-[#2563EB] font-bold shrink-0">Q{qIdx + 1}.</span>
                         <span className="leading-relaxed">{q.replace(/^\d+\.\s*/, '')}</span>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-xs text-zinc-400 italic">No specific questions attached. Refer to course notes.</p>
+                  <p className="text-xs text-[#666666] italic">No specific questions attached. Refer to course notes.</p>
                 )}
               </div>
 

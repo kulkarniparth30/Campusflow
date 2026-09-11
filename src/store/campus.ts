@@ -1,4 +1,6 @@
+
 import { create } from 'zustand'
+import type { Role } from '../types'
 import {
   BATCH_STUDENTS,
   DEMO_ACHIEVEMENTS,
@@ -62,7 +64,8 @@ interface CampusState {
   activeFlashRoll: FlashRollSession | null
 
   // Auth
-  login: (email: string, password: string) => string | null
+  login: (email: string, password: string, roleHint?: Role) => string | null
+  signUp: (email: string, password: string, full_name: string, role: Role, department?: string, roll_no?: string) => string | null
   logout: () => void
 
   // Flash-Roll TOTP Dynamic QR
@@ -139,6 +142,24 @@ function validatePersistedProfile(): Profile | null {
   } catch {
     return null
   }
+}
+
+
+function getDynamicUser(email: string) {
+  try {
+    const raw = localStorage.getItem(`cf-user-${email.toLowerCase()}`)
+    return raw ? JSON.parse(raw) : null
+  } catch {
+    return null
+  }
+}
+
+function saveDynamicUser(email: string, password: string, profile: Profile) {
+  const record = { password, profile }
+  try {
+    localStorage.setItem(`cf-user-${email.toLowerCase()}`, JSON.stringify(record))
+  } catch {}
+  return record
 }
 
 export const useCampusStore = create<CampusState>((set, get) => ({
@@ -364,12 +385,59 @@ export const useCampusStore = create<CampusState>((set, get) => ({
     )
   },
 
-  login: (email, password) => {
-    const row = DEMO_PROFILES[email.trim().toLowerCase()]
-    if (!row || row.password !== password) return 'Invalid demo credentials.'
-    // Security: store only the id, re-derive profile from known data
+  login: (email, password, roleHint?: Role) => {
+    const emailKey = email.trim().toLowerCase()
+    let row = DEMO_PROFILES[emailKey] || getDynamicUser(emailKey)
+
+    if (!row) {
+      // Dynamic account generation for any student, faculty, or admin joining
+      const inferredRole: Role = roleHint || (emailKey.includes('faculty') ? 'faculty' : emailKey.includes('admin') ? 'admin' : 'student')
+      const nameParts = emailKey.split('@')[0].split(/[._]/)
+      const formattedName = nameParts.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ') || 'Campus Member'
+
+      const newProfile: Profile = {
+        id: `user-${Date.now()}`,
+        full_name: formattedName,
+        role: inferredRole,
+        email: emailKey,
+        roll_no: inferredRole === 'student' ? `CS24B${Math.floor(1000 + Math.random() * 9000)}` : null,
+        department: 'Computer Science',
+        semester: inferredRole === 'student' ? 1 : null,
+        designation: inferredRole === 'faculty' ? 'Faculty Member' : inferredRole === 'admin' ? 'Academic Administrator' : undefined,
+      }
+      row = saveDynamicUser(emailKey, password, newProfile)
+    }
+
+    if (row.password && password && row.password !== password) {
+      return 'Incorrect password. Please verify your credentials.'
+    }
+
     localStorage.setItem('cf-session', JSON.stringify(row.profile))
     set({ profile: row.profile })
+    return null
+  },
+
+  signUp: (email, password, full_name, role, department, roll_no) => {
+    const emailKey = email.trim().toLowerCase()
+    const existing = DEMO_PROFILES[emailKey] || getDynamicUser(emailKey)
+    if (existing) {
+      return 'An account with this email already exists. Please sign in.'
+    }
+
+    const newProfile: Profile = {
+      id: `user-${Date.now()}`,
+      full_name: full_name.trim() || 'Campus Member',
+      role: role,
+      email: emailKey,
+      roll_no: role === 'student' ? (roll_no?.trim() || `CS24B${Math.floor(1000 + Math.random() * 9000)}`) : null,
+      department: department?.trim() || 'Computer Science',
+      semester: role === 'student' ? 1 : null,
+      designation: role === 'faculty' ? 'Faculty Member' : role === 'admin' ? 'Academic Administrator' : undefined,
+    }
+
+    saveDynamicUser(emailKey, password, newProfile)
+    localStorage.setItem('cf-session', JSON.stringify(newProfile))
+    set({ profile: newProfile })
     return null
   },
 

@@ -64,14 +64,14 @@ export function AttendanceTable({
   }
 
   return (
-    <Card className="glass">
+    <Card className="bg-white/90 backdrop-blur-md border-[#E2E6ED] shadow-sm">
       <CardHeader className="flex-col gap-3 sm:flex-row sm:items-center">
         <div>
           <div className="flex items-center gap-2">
-            <CardTitle>Quick Attendance Marking</CardTitle>
+            <CardTitle className="text-[#1F1F1F]">Quick Attendance Marking</CardTitle>
             <Badge tone="indigo">Batch Mode</Badge>
           </div>
-          <CardHint>
+          <CardHint className="text-[#666666]">
             Spreadsheet-style interface to record Present/Absent/Late for student batches.
           </CardHint>
         </div>
@@ -81,16 +81,16 @@ export function AttendanceTable({
             type="date"
             value={sessionDate}
             onChange={(e) => setSessionDate(e.target.value)}
-            className="h-9 rounded-xl border border-white/10 bg-black/25 px-3 text-xs text-zinc-200 outline-none focus:border-indigo-400"
+            className="h-9 rounded-xl border border-[#E2E6ED] bg-[#F5F6F8] px-3 text-xs text-[#1F1F1F] outline-none focus:border-[#2563EB]"
           />
           {subjects.length > 0 && (
             <select
-              className="h-9 rounded-xl border border-white/10 bg-black/25 px-3 text-xs text-zinc-200 outline-none focus:border-indigo-400"
+              className="h-9 rounded-xl border border-[#E2E6ED] bg-[#F5F6F8] px-3 text-xs text-[#1F1F1F] outline-none focus:border-[#2563EB]"
               value={subjectId}
               onChange={(e) => setSubjectId(e.target.value)}
             >
               {subjects.map((s) => (
-                <option key={s.id} value={s.id} className="bg-zinc-900 text-zinc-200">
+                <option key={s.id} value={s.id} className="bg-white text-[#1F1F1F]">
                   {s.code} — {s.name}
                 </option>
               ))}
@@ -100,49 +100,49 @@ export function AttendanceTable({
       </CardHeader>
 
       {/* Quick stats & batch action buttons */}
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/6 bg-white/3 p-3">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#E2E6ED] bg-[#F5F6F8] p-3">
         <div className="flex items-center gap-4 text-xs">
-          <span className="flex items-center gap-1.5 text-emerald-400">
+          <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
             <UserCheck size={14} /> {presentCount} Present
           </span>
-          <span className="flex items-center gap-1.5 text-red-400">
+          <span className="flex items-center gap-1.5 text-red-700 font-semibold">
             <UserMinus size={14} /> {absentCount} Absent
           </span>
-          <span className="flex items-center gap-1.5 text-amber-400">
+          <span className="flex items-center gap-1.5 text-amber-700 font-semibold">
             <Clock size={14} /> {lateCount} Late
           </span>
-          <span className="text-zinc-500">Total: {students.length} students</span>
+          <span className="text-[#666666]">Total: {students.length} students</span>
         </div>
 
         <div className="flex items-center gap-1.5 text-xs">
-          <span className="text-zinc-400 mr-1">Batch Actions:</span>
+          <span className="text-[#666666] mr-1">Batch Actions:</span>
           <button
             type="button"
             onClick={() => setAll('present')}
-            className="rounded-lg bg-emerald-500/15 px-2.5 py-1 font-medium text-emerald-300 hover:bg-emerald-500/25 transition-colors cursor-pointer"
+            className="rounded-lg bg-emerald-100 px-2.5 py-1 font-medium text-emerald-800 hover:bg-emerald-200 transition-colors cursor-pointer"
           >
             All Present
           </button>
           <button
             type="button"
             onClick={() => setAll('absent')}
-            className="rounded-lg bg-red-500/15 px-2.5 py-1 font-medium text-red-300 hover:bg-red-500/25 transition-colors cursor-pointer"
+            className="rounded-lg bg-red-100 px-2.5 py-1 font-medium text-red-800 hover:bg-red-200 transition-colors cursor-pointer"
           >
             All Absent
           </button>
           <button
             type="button"
             onClick={() => setAll('late')}
-            className="rounded-lg bg-amber-500/15 px-2.5 py-1 font-medium text-amber-300 hover:bg-amber-500/25 transition-colors cursor-pointer"
+            className="rounded-lg bg-amber-100 px-2.5 py-1 font-medium text-amber-800 hover:bg-amber-200 transition-colors cursor-pointer"
           >
             All Late
           </button>
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-white/8">
+      <div className="overflow-x-auto rounded-xl border border-[#E2E6ED] bg-white">
         <table className="w-full text-left text-sm">
-          <thead className="bg-white/5 text-[11px] uppercase tracking-wide text-zinc-400">
+          <thead className="bg-[#F5F6F8] text-[11px] uppercase tracking-wide text-[#666666]">
             <tr>
               <th className="px-4 py-2.5">Roll No</th>
               <th className="px-4 py-2.5">Student Name</th>
@@ -154,7 +154,7 @@ export function AttendanceTable({
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="divide-y divide-white/6"
+            className="divide-y divide-[#E2E6ED]"
           >
             {students.map((st, idx) => {
               const currentStatus = marks[st.id]
@@ -164,14 +164,14 @@ export function AttendanceTable({
                   key={st.id}
                   className={cn(
                     'transition-colors',
-                    idx % 2 === 0 ? 'bg-white/2' : 'bg-white/4',
-                    'hover:bg-white/10'
+                    idx % 2 === 0 ? 'bg-white' : 'bg-[#F5F6F8]/50',
+                    'hover:bg-[#F5F6F8]'
                   )}
                 >
-                  <td className="px-4 py-3 font-mono text-xs text-indigo-300">{st.roll_no}</td>
-                  <td className="px-4 py-3 font-medium text-zinc-200">
+                  <td className="px-4 py-3 font-mono text-xs text-[#2563EB] font-bold">{st.roll_no}</td>
+                  <td className="px-4 py-3 font-medium text-[#1F1F1F]">
                     <div>{st.full_name}</div>
-                    <div className="text-[11px] text-zinc-500">{st.email}</div>
+                    <div className="text-[11px] text-[#666666]">{st.email}</div>
                   </td>
                   <td className="px-4 py-3">
                     <Badge
@@ -196,11 +196,11 @@ export function AttendanceTable({
                           className={`h-7 w-7 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                             marks[st.id] === status
                               ? status === 'absent'
-                                ? 'bg-red-500 text-white shadow-[0_0_12px_rgba(239,68,68,0.5)]'
+                                ? 'bg-red-600 text-white shadow-sm'
                                 : status === 'late'
-                                  ? 'bg-amber-500 text-black shadow-[0_0_12px_rgba(245,158,11,0.5)]'
-                                  : 'bg-emerald-500 text-black shadow-[0_0_12px_rgba(16,185,129,0.5)]'
-                              : 'bg-white/6 text-zinc-400 hover:bg-white/12 hover:text-zinc-200'
+                                  ? 'bg-amber-500 text-white shadow-sm'
+                                  : 'bg-emerald-600 text-white shadow-sm'
+                              : 'bg-[#F5F6F8] text-[#666666] border border-[#E2E6ED] hover:text-[#1F1F1F]'
                           }`}
                           title={`Mark ${status}`}
                         >
@@ -217,7 +217,7 @@ export function AttendanceTable({
       </div>
 
       <div className="mt-4 flex items-center justify-end">
-        <Button onClick={handleSave}>Save Session Records</Button>
+        <Button onClick={handleSave} className="bg-[#2563EB] text-white hover:bg-[#1D4ED8] font-bold shadow-md shadow-[#2563EB]/20">Save Session Records</Button>
       </div>
     </Card>
   )

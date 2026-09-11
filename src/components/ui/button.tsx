@@ -4,17 +4,17 @@ import type { ButtonHTMLAttributes } from 'react'
 import { cn } from '../../lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 rounded-xl text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/70 cursor-pointer',
+  'inline-flex items-center justify-center gap-2 rounded-xl text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563EB]/40 cursor-pointer',
   {
     variants: {
       variant: {
         default:
-          'bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 text-white font-semibold shadow-[0_0_24px_-4px_rgba(6,182,212,0.6)] hover:shadow-[0_0_30px_rgba(6,182,212,0.8)] hover:brightness-110 active:scale-[0.98]',
-        ghost: 'hover:bg-cyan-500/10 hover:text-cyan-300 text-zinc-300',
-        outline: 'border border-white/12 bg-white/3 hover:bg-white/8 hover:border-cyan-500/40 text-zinc-200',
-        danger: 'bg-rose-600 text-white hover:bg-rose-500 shadow-[0_0_20px_-5px_rgba(244,63,94,0.5)]',
-        success: 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-[0_0_20px_-5px_rgba(16,185,129,0.5)]',
-        muted: 'bg-white/6 text-zinc-200 hover:bg-white/10',
+          'bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold shadow-md active:scale-[0.98]',
+        ghost: 'hover:bg-[#DCE7F8] hover:text-[#2563EB] text-[#666666]',
+        outline: 'border border-[#E2E6ED] bg-white hover:bg-[#F5F6F8] text-[#1F1F1F]',
+        danger: 'bg-rose-600 text-white hover:bg-rose-700 shadow-sm',
+        success: 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm',
+        muted: 'bg-[#DCE7F8] text-[#2563EB] hover:bg-[#B8CCF0] border border-[#B8CCF0]',
       },
       size: {
         default: 'h-10 px-4',
